@@ -31,6 +31,12 @@ namespace shopProject
                 BackColor = Color.Gray
             };
             container.Controls.Add(header);
+
+            container.SetColumnSpan(header, 100);
+            container.RowStyles.Add(new RowStyle(SizeType.Percent, 15));
+            container.RowStyles.Add(new RowStyle(SizeType.Percent, 70));
+            container.RowStyles.Add(new RowStyle(SizeType.Percent, 15));
+
         }
     }
 }
