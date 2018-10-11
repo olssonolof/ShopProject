@@ -6,12 +6,19 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
 
+
 namespace shopProject
 {
     class MyForm : Form
     {
+
+        Product produkt1 = new Product();
+        
+       
         public MyForm()
         {
+
+            produkt1.GetData();
             Text = "Game Shop";
             Size = new Size(800, 800);
             Font = new Font("Arial", 14);
@@ -29,7 +36,7 @@ namespace shopProject
             {
                 Dock = DockStyle.Fill,
                 BackColor = Color.Gray
-            };
+            }; 
             container.Controls.Add(header);
 
             Panel footer = new Panel
