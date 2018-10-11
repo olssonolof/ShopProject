@@ -10,5 +10,9 @@ namespace shopProject
 {
     class MyForm : Form
     {
+        MyForm()
+        {
+
+        }
     }
 }
