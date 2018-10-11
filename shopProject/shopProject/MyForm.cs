@@ -32,6 +32,12 @@ namespace shopProject
             };
             container.Controls.Add(header);
 
+            Panel footer = new Panel
+            {
+                BackColor = Color.Gray,
+                Dock = DockStyle.Fill
+            };
+
             container.SetColumnSpan(header, 100);
             container.RowStyles.Add(new RowStyle(SizeType.Percent, 15));
             container.RowStyles.Add(new RowStyle(SizeType.Percent, 70));
