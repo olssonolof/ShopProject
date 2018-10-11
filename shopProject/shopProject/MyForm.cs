@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
+using System.IO;
 
 
 namespace shopProject
@@ -12,16 +13,17 @@ namespace shopProject
     class MyForm : Form
     {
 
-        Product produkt1 = new Product();
+        Product[] produkt1 = new Product[8];
+        DataGridView data1 = new DataGridView();
         
        
         public MyForm()
         {
 
-            produkt1.GetData();
+           // produkt1.GetData();
             Text = "Game Shop";
             Size = new Size(800, 800);
-            Font = new Font("Arial", 14);
+            Font = new Font("Arial", 10);
 
 
             TableLayoutPanel container = new TableLayoutPanel
@@ -37,20 +39,39 @@ namespace shopProject
                 Dock = DockStyle.Fill,
                 BackColor = Color.Gray
             }; 
-            container.Controls.Add(header);
 
             Panel footer = new Panel
             {
                 BackColor = Color.Gray,
                 Dock = DockStyle.Fill
             };
-            container.Controls.Add(footer);
 
+            data1 = new DataGridView
+            {
+                ColumnCount = 3,             
+            };
+            NameDataGrid(data1);
+
+
+
+            container.Controls.Add(header);
+            container.Controls.Add(footer,2,2);
+            container.Controls.Add(data1, 0, 1);
             container.SetColumnSpan(header, 100);
             container.RowStyles.Add(new RowStyle(SizeType.Percent, 15));
             container.RowStyles.Add(new RowStyle(SizeType.Percent, 70));
             container.RowStyles.Add(new RowStyle(SizeType.Percent, 15));
 
         }
+
+        static void NameDataGrid(DataGridView data)
+        {
+            data.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            data.Columns[0].Name = "Game";
+            data.Columns[1].Name = "Realese year";
+            data.Columns[2].Name = "Price";
+        }
+     
+
     }
 }
