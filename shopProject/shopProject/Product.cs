@@ -27,8 +27,5 @@ namespace shopProject
             }
         }
     }
-    class person
-    {
-
-    }
+    
 }
