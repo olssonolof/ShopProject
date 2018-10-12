@@ -15,19 +15,17 @@ namespace shopProject
 
 
 
-        public Product[] GetData()
+        public Product(string formated)
         {
-            string[] nonFormated = File.ReadAllLines("products.csv");
-            Product[] formated = new Product[nonFormated.Length];
-            for (int i = 0; i < nonFormated.Length; i++)
-            {
-                string[] x = nonFormated[i].Split(',');
-                formated[i].Name = x[0];
-                formated[i].Year = int.Parse(x[1]);
-                formated[i].Price = int.Parse(x[2]);
-            }
-            return formated;            
+            string [] x = formated.Split(',');
+          
+            Name = x[0];
+            Year = int.Parse(x[1]);
+            Price = int.Parse(x[2]);
+                                            
         }
+
+        
     }
    
 }
