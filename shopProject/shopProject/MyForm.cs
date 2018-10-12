@@ -64,7 +64,8 @@ namespace shopProject
             data1 = new DataGridView
             {
                 ColumnCount = 3,
-                Dock = DockStyle.Fill
+                Dock = DockStyle.Fill,
+                AutoSize = false,
             };
             NameDataGrid(data1);
 
@@ -108,6 +109,7 @@ namespace shopProject
             data.Columns[0].Name = "Game";
             data.Columns[1].Name = "Release year";
             data.Columns[2].Name = "Price";
+
         }
 
         static string[] GetData()
