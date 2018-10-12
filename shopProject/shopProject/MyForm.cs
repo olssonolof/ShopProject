@@ -13,22 +13,24 @@ namespace shopProject
     class MyForm : Form
     {
 
-        Product[] produkt1 = new Product[8];
+       
         TableLayoutPanel container;
         DataGridView data1;
         Panel infoContainer;
         Panel header;
         Panel footer;
+        
+        
 
         public MyForm()
         {
-
-           // produkt1.GetData();
+           
+                      
             Text = "Game Shop";
             Size = new Size(800, 800);
             Font = new Font("Arial", 10);
 
-
+            
             container = new TableLayoutPanel
             {
                 RowCount = 3,
