@@ -49,15 +49,25 @@ namespace shopProject
             data1 = new DataGridView
             {
                 ColumnCount = 3,             
+                Dock = DockStyle.Fill
             };
             NameDataGrid(data1);
 
+            Panel infoContainer = new Panel
+            {
+                Dock = DockStyle.Fill,
+                BackColor = Color.Red
+                
+            };
 
 
             container.Controls.Add(header);
             container.Controls.Add(footer,2,2);
             container.Controls.Add(data1, 0, 1);
+            container.Controls.Add(infoContainer, 1, 1);
             container.SetColumnSpan(header, 100);
+            container.SetColumnSpan(footer, 100);
+
             container.RowStyles.Add(new RowStyle(SizeType.Percent, 15));
             container.RowStyles.Add(new RowStyle(SizeType.Percent, 70));
             container.RowStyles.Add(new RowStyle(SizeType.Percent, 15));
