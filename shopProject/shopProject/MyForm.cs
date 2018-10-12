@@ -23,6 +23,7 @@ namespace shopProject
         TableLayoutPanel infoContainerTable;
         NumericUpDown amountToBuy;
 
+        Customer customer;
         
 
         string[] nonformated;
@@ -32,7 +33,7 @@ namespace shopProject
         {
 
             nonformated = GetData();
-
+            customer = new Customer();
             products = new List<Product> { };
             foreach (string s in nonformated)
             {
@@ -70,7 +71,8 @@ namespace shopProject
                 Dock = DockStyle.Fill,
                 RowHeadersVisible = false,
                 GridColor = SystemColors.GrayText,
-                CellBorderStyle = DataGridViewCellBorderStyle.None
+                CellBorderStyle = DataGridViewCellBorderStyle.None,
+                SelectionMode = DataGridViewSelectionMode.FullRowSelect
             };
             NameDataGrid(data1);
 
@@ -125,6 +127,7 @@ namespace shopProject
             infoContainerTable.RowStyles.Add(new RowStyle(SizeType.Percent, 32));
 
             infoContainerTable.Controls.Add(buy, 2, 1);
+            buy.Click += BuyClicked;
 
             //infoContainer.Controls.Add(infoContainerTable);
             //infoContainer.Controls.Add(infoContainerTable);
@@ -145,7 +148,7 @@ namespace shopProject
             data.Columns[0].Name = "Game";
             data.Columns[1].Name = "Release year";
             data.Columns[2].Name = "Price";
-
+            
         }
 
         static string[] GetData()
@@ -160,5 +163,13 @@ namespace shopProject
                 data1.Rows.Add(x.Name, x.Year, x.Price);
             }
         }
+
+
+        public void BuyClicked(object sender, EventArgs e)
+        {
+            MessageBox.Show(data1.CurrentRow.Cells[0].Value.ToString());
+        }
     }
 }
+
+//selectionChanged
