@@ -24,7 +24,7 @@ namespace shopProject
         NumericUpDown amountToBuy;
 
         Customer customer;
-        
+
 
         string[] nonformated;
         List<Product> products;
@@ -87,21 +87,22 @@ namespace shopProject
             dataGridCart = new DataGridView
             {
                 Dock = DockStyle.Fill,
-                ColumnCount = 2,
-                
-            };
+                ColumnCount = 3,
 
+            };
+            NameDataGridCart(dataGridCart);
             infoContainerTable = new TableLayoutPanel
             {
                 ColumnCount = 2,
-                RowCount= 3,
+                RowCount = 3,
                 Dock = DockStyle.Fill
             };
 
 
             amountToBuy = new NumericUpDown
             {
-                Dock = DockStyle.Top
+                Dock = DockStyle.Top,
+                Minimum = 1,
             };
 
             Button buy = new Button
@@ -109,7 +110,7 @@ namespace shopProject
 
             };
 
-//            amountToBuy.Location = CenterToScreen();
+            //            amountToBuy.Location = CenterToScreen();
 
             container.Controls.Add(header);
             container.Controls.Add(footer, 2, 2);
@@ -148,7 +149,14 @@ namespace shopProject
             data.Columns[0].Name = "Game";
             data.Columns[1].Name = "Release year";
             data.Columns[2].Name = "Price";
-            
+
+        }
+        static void NameDataGridCart(DataGridView data)
+        {
+            data.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            data.Columns[0].Name = "Game";
+            data.Columns[1].Name = "Amount";
+            data.Columns[2].Name = "Price";
         }
 
         static string[] GetData()
@@ -167,9 +175,50 @@ namespace shopProject
 
         public void BuyClicked(object sender, EventArgs e)
         {
-            MessageBox.Show(data1.CurrentRow.Cells[0].Value.ToString());
+            string x = data1.CurrentRow.Cells[0].Value.ToString();
+            foreach (Product game in products)
+            {
+                if (x == game.Name)
+                {
+                    customer.AddProductToCart(game);
+                 
+                    dataGridCart.Rows.Clear();
+                  
+                    AddDataCart();
+                    amountToBuy.Value = 1;
+                    break;
+                }
+            }
         }
+
+        public void AddDataCart()
+        {
+           
+
+            foreach (KeyValuePair<string, int> x in customer.Cart)
+            {
+                int z = 0;
+                for (int i = 0; i < products.Count; i++)
+                {
+                    if (products[i].Name == x.Key)
+                    {
+                        z = products[i].Price;
+                        break;
+                    }
+                }
+                dataGridCart.Rows.Add(x.Key, x.Value, x.Value * z);
+                customer.CountTotalAmount();
+
+            }
+
+        }
+
+
+
     }
+
 }
+
+
 
 //selectionChanged

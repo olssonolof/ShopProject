@@ -24,18 +24,33 @@ namespace shopProject
     }
     class Customer
     {
-        public List<Product> Cart;
+        public Dictionary<String, int> Cart = new Dictionary<String, int> { };
         public int TotalPrise;
         public int TotalNrOfProduct;
         public int Discount;
 
 
-        public void AddProductToCard(Product product, int amount)
+        public void AddProductToCart(Product product)
         {
-            for (int i = 1; i < amount; i++)
+            if (Cart.ContainsKey(product.Name))
             {
-                Cart.Add(product);
-                TotalPrise += product.Price;
+                Cart[product.Name]++;
+            }
+            else
+            {
+                Cart.Add(product.Name, 1);
+            }
+            TotalPrise += product.Price;
+
+            
+        }
+        public void CountTotalAmount()
+        {
+            TotalNrOfProduct = 0;
+            foreach (KeyValuePair<string, int> nr in Cart)
+            {
+              
+                TotalNrOfProduct += nr.Value;
             }
         }
     }
