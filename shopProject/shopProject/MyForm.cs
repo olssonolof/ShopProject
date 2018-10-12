@@ -14,9 +14,12 @@ namespace shopProject
     {
 
         Product[] produkt1 = new Product[8];
-        DataGridView data1 = new DataGridView();
-        
-       
+        TableLayoutPanel container;
+        DataGridView data1;
+        Panel infoContainer;
+        Panel header;
+        Panel footer;
+
         public MyForm()
         {
 
@@ -26,7 +29,7 @@ namespace shopProject
             Font = new Font("Arial", 10);
 
 
-            TableLayoutPanel container = new TableLayoutPanel
+            container = new TableLayoutPanel
             {
                 RowCount = 3,
                 ColumnCount = 3,
@@ -34,13 +37,13 @@ namespace shopProject
             };
             Controls.Add(container);
 
-            Panel header = new Panel
+            header = new Panel
             {
                 Dock = DockStyle.Fill,
                 BackColor = Color.Gray
             }; 
 
-            Panel footer = new Panel
+            footer = new Panel
             {
                 BackColor = Color.Gray,
                 Dock = DockStyle.Fill
@@ -53,12 +56,14 @@ namespace shopProject
             };
             NameDataGrid(data1);
 
-            Panel infoContainer = new Panel
+            infoContainer = new Panel
             {
                 Dock = DockStyle.Fill,
                 BackColor = Color.Red
                 
             };
+
+
 
 
             container.Controls.Add(header);
@@ -71,6 +76,9 @@ namespace shopProject
             container.RowStyles.Add(new RowStyle(SizeType.Percent, 15));
             container.RowStyles.Add(new RowStyle(SizeType.Percent, 70));
             container.RowStyles.Add(new RowStyle(SizeType.Percent, 15));
+            container.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 32));
+            container.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 36));
+            container.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 32));
 
         }
 
