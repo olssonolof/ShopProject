@@ -19,8 +19,9 @@ namespace shopProject
         Panel infoContainer;
         Panel header;
         Panel footer;
-        
-        
+        DataGridView dataGridCart;
+
+
 
         public MyForm()
         {
@@ -65,6 +66,12 @@ namespace shopProject
                 
             };
 
+            dataGridCart = new DataGridView
+            {
+                Dock = DockStyle.Fill,
+                ColumnCount = 2
+            };
+
 
 
 
@@ -72,6 +79,7 @@ namespace shopProject
             container.Controls.Add(footer,2,2);
             container.Controls.Add(data1, 0, 1);
             container.Controls.Add(infoContainer, 1, 1);
+            container.Controls.Add(dataGridCart, 2, 1);
             container.SetColumnSpan(header, 100);
             container.SetColumnSpan(footer, 100);
 
