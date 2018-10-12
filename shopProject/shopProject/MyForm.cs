@@ -20,7 +20,10 @@ namespace shopProject
         Panel header;
         Panel footer;
         DataGridView dataGridCart;
+        TableLayoutPanel infoContainerTable;
+        NumericUpDown amountToBuy;
 
+        
 
         string[] nonformated;
         List<Product> products;
@@ -67,6 +70,7 @@ namespace shopProject
                 Dock = DockStyle.Fill,
                 RowHeadersVisible = false,
                 GridColor = SystemColors.GrayText,
+                CellBorderStyle = DataGridViewCellBorderStyle.None
             };
             NameDataGrid(data1);
 
@@ -85,8 +89,25 @@ namespace shopProject
                 
             };
 
+            infoContainerTable = new TableLayoutPanel
+            {
+                ColumnCount = 2,
+                RowCount= 3,
+                Dock = DockStyle.Fill
+            };
 
 
+            amountToBuy = new NumericUpDown
+            {
+                Dock = DockStyle.Top
+            };
+
+            Button buy = new Button
+            {
+
+            };
+
+//            amountToBuy.Location = CenterToScreen();
 
             container.Controls.Add(header);
             container.Controls.Add(footer, 2, 2);
@@ -95,6 +116,19 @@ namespace shopProject
             container.Controls.Add(dataGridCart, 2, 1);
             container.SetColumnSpan(header, 100);
             container.SetColumnSpan(footer, 100);
+
+            infoContainer.Controls.Add(infoContainerTable);
+            infoContainerTable.Controls.Add(amountToBuy);
+            infoContainerTable.SetColumnSpan(amountToBuy, 100);
+            infoContainerTable.RowStyles.Add(new RowStyle(SizeType.Percent, 32));
+            infoContainerTable.RowStyles.Add(new RowStyle(SizeType.Percent, 36));
+            infoContainerTable.RowStyles.Add(new RowStyle(SizeType.Percent, 32));
+
+            infoContainerTable.Controls.Add(buy, 2, 1);
+
+            //infoContainer.Controls.Add(infoContainerTable);
+            //infoContainer.Controls.Add(infoContainerTable);
+
 
             container.RowStyles.Add(new RowStyle(SizeType.Percent, 15));
             container.RowStyles.Add(new RowStyle(SizeType.Percent, 70));
