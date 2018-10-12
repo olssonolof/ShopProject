@@ -66,8 +66,7 @@ namespace shopProject
                 ColumnCount = 3,
                 Dock = DockStyle.Fill,
                 RowHeadersVisible = false,
-                GridColor = SystemColors.GrayText
-
+                GridColor = SystemColors.GrayText,
             };
             NameDataGrid(data1);
 
@@ -112,6 +111,7 @@ namespace shopProject
             data.Columns[0].Name = "Game";
             data.Columns[1].Name = "Release year";
             data.Columns[2].Name = "Price";
+
         }
 
         static string[] GetData()
