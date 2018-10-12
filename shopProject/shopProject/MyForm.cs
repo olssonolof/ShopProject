@@ -64,7 +64,10 @@ namespace shopProject
             data1 = new DataGridView
             {
                 ColumnCount = 3,
-                Dock = DockStyle.Fill
+                Dock = DockStyle.Fill,
+                RowHeadersVisible = false,
+                GridColor = SystemColors.GrayText
+
             };
             NameDataGrid(data1);
 
@@ -79,7 +82,8 @@ namespace shopProject
             dataGridCart = new DataGridView
             {
                 Dock = DockStyle.Fill,
-                ColumnCount = 2
+                ColumnCount = 2,
+                
             };
 
 
