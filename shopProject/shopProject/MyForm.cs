@@ -31,7 +31,7 @@ namespace shopProject
 
         public MyForm()
         {
-
+            #region
             nonformated = GetData();
             customer = new Customer();
             products = new List<Product> { };
@@ -109,7 +109,7 @@ namespace shopProject
             {
 
             };
-
+            #endregion  //GUI
             //            amountToBuy.Location = CenterToScreen();
 
             container.Controls.Add(header);
