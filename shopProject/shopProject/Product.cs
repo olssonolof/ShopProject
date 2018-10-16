@@ -30,6 +30,11 @@ namespace shopProject
         public int Discount;
 
 
+        public Customer()
+        {
+            ReadSaveCart();
+        }
+
         public void AddProductToCart(Product product)
         {
             if (Cart.ContainsKey(product.Name))
@@ -51,6 +56,20 @@ namespace shopProject
             {
               
                 TotalNrOfProduct += nr.Value;
+            }
+        }
+
+        public void ReadSaveCart()
+        {
+            string[] nonFormated = File.ReadAllLines(@"C:\Windows\Temp\shop.txt");
+            
+            foreach (var item in nonFormated)
+            {
+                string[] formated = item.Split(',');
+                Cart.Add(formated[0], int.Parse(formated[1]));
+                TotalNrOfProduct += int.Parse(formated[1]);
+                TotalPrise += int.Parse(formated[2]);
+
             }
         }
 

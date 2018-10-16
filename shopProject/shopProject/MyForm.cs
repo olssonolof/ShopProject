@@ -154,7 +154,7 @@ namespace shopProject
             container.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 32));
             container.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 36));
             container.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 32));
-
+            AddDataCart();
         }
 
         static void NameDataGrid(DataGridView data)
@@ -228,15 +228,15 @@ namespace shopProject
         public void WriteData(DataGridView cart)
         {
            
-            string array; ;
+            string cartCSV; ;
             List<string> listFormated = new List<string> { };
 
             foreach (DataGridViewRow row in cart.Rows)
             {
-                array = row.Cells[0].Value.ToString().Trim()+',';
-                array += row.Cells[1].Value.ToString().Trim()+',';
-                array += row.Cells[2].Value.ToString().Trim();
-                listFormated.Add(array);
+                cartCSV = row.Cells[0].Value.ToString().Trim()+',';
+                cartCSV += row.Cells[1].Value.ToString().Trim()+',';
+                cartCSV += row.Cells[2].Value.ToString().Trim();
+                listFormated.Add(cartCSV);
                 File.WriteAllLines(@"C:\Windows\Temp\shop.txt", listFormated);
              
             }
