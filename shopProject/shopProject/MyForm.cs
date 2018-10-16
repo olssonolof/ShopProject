@@ -123,6 +123,10 @@ namespace shopProject
                 Text = "Buy >>",
                 
             };
+            Button remove = new Button
+            {
+                Text = "Remove <<"
+            };
             #endregion  //GUI
             //            amountToBuy.Location = CenterToScreen();
 
@@ -142,6 +146,8 @@ namespace shopProject
             infoContainerTable.RowStyles.Add(new RowStyle(SizeType.Percent, 32));
 
             infoContainerTable.Controls.Add(buy, 1, 2);
+            infoContainerTable.Controls.Add(remove, 1, 2);
+
             buy.Click += BuyClicked;
 
             //infoContainer.Controls.Add(infoContainerTable);
