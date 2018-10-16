@@ -31,10 +31,10 @@ namespace shopProject
 
         public MyForm()
         {
+            #region UIControls
             nonformated = GetData();
             customer = new Customer();
             products = new List<Product> { };
-            #region UIControls
             foreach (string s in nonformated)
             {
                 products.Add(new Product(s));
@@ -72,7 +72,13 @@ namespace shopProject
                 RowHeadersVisible = false,
                 GridColor = SystemColors.GrayText,
                 CellBorderStyle = DataGridViewCellBorderStyle.None,
-                SelectionMode = DataGridViewSelectionMode.FullRowSelect
+                SelectionMode = DataGridViewSelectionMode.FullRowSelect,
+                Font = new Font("Arial", 8),
+                AllowUserToAddRows = false,
+                BackgroundColor = SystemColors.Control,
+
+
+
             };
             NameDataGrid(data1);
 
@@ -88,8 +94,15 @@ namespace shopProject
             {
                 Dock = DockStyle.Fill,
                 ColumnCount = 3,
+                RowHeadersVisible = false,
+                CellBorderStyle = DataGridViewCellBorderStyle.None,
+                SelectionMode = DataGridViewSelectionMode.FullRowSelect,
+                Font = new Font("Arial", 8),
+                BackgroundColor = SystemColors.Control,
+                AllowUserToAddRows = false,
 
-            };
+
+        };
             NameDataGridCart(dataGridCart);
             infoContainerTable = new TableLayoutPanel
             {
@@ -187,15 +200,15 @@ namespace shopProject
                   
                     AddDataCart();
                     amountToBuy.Value = 1;
+                    WriteData(dataGridCart);
                     break;
+
                 }
             }
         }
 
         public void AddDataCart()
-        {
-           
-
+        {        
             foreach (KeyValuePair<string, int> x in customer.Cart)
             {
                 int z = 0;
@@ -211,12 +224,28 @@ namespace shopProject
                 customer.CountTotalAmount();
 
             }
+        }
+        public void WriteData(DataGridView cart)
+        {
+           
+            string array; ;
+            List<string> listFormated = new List<string> { };
 
+            foreach (DataGridViewRow row in cart.Rows)
+            {
+                array = row.Cells[0].Value.ToString().Trim()+',';
+                array += row.Cells[1].Value.ToString().Trim()+',';
+                array += row.Cells[2].Value.ToString().Trim();
+                listFormated.Add(array);
+                File.WriteAllLines(@"C:\Windows\Temp\shop.txt", listFormated);
+             
+            }
+         
         }
 
 
 
-    }
+        }
 
 }
 

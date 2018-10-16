@@ -53,6 +53,8 @@ namespace shopProject
                 TotalNrOfProduct += nr.Value;
             }
         }
+
+       
     }
    
 }
