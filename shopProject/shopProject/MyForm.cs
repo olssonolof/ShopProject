@@ -31,7 +31,7 @@ namespace shopProject
 
         public MyForm()
         {
-            #region
+            #region UIControls
             nonformated = GetData();
             customer = new Customer();
             products = new List<Product> { };
@@ -79,7 +79,7 @@ namespace shopProject
             infoContainer = new Panel
             {
                 Dock = DockStyle.Fill,
-                BackColor = Color.Red
+                BackColor = SystemColors.ControlDark
 
             };
             AddData(data1);
@@ -107,7 +107,8 @@ namespace shopProject
 
             Button buy = new Button
             {
-
+                Text = "Buy >>",
+                
             };
             #endregion  //GUI
             //            amountToBuy.Location = CenterToScreen();
@@ -127,7 +128,7 @@ namespace shopProject
             infoContainerTable.RowStyles.Add(new RowStyle(SizeType.Percent, 36));
             infoContainerTable.RowStyles.Add(new RowStyle(SizeType.Percent, 32));
 
-            infoContainerTable.Controls.Add(buy, 2, 1);
+            infoContainerTable.Controls.Add(buy, 1, 2);
             buy.Click += BuyClicked;
 
             //infoContainer.Controls.Add(infoContainerTable);
