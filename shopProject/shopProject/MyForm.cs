@@ -148,6 +148,8 @@ namespace shopProject
             infoContainerTable.Controls.Add(buy, 1, 2);
             infoContainerTable.Controls.Add(remove, 1, 2);
 
+
+            remove.Click += Remove_Clicked;
             buy.Click += BuyClicked;
 
             //infoContainer.Controls.Add(infoContainerTable);
@@ -161,6 +163,14 @@ namespace shopProject
             container.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 36));
             container.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 32));
             AddDataCart();
+        }
+
+        private void Remove_Clicked(object sender, EventArgs e)
+        {
+            customer.RemoveFromCart(dataGridCart);
+            dataGridCart.Rows.Clear();
+            AddDataCart();
+            WriteData(dataGridCart);
         }
 
         static void NameDataGrid(DataGridView data)
@@ -232,21 +242,22 @@ namespace shopProject
             }
         }
         public void WriteData(DataGridView cart)
-        {
-           
+        {           
             string cartCSV; ;
             List<string> listFormated = new List<string> { };
-
             foreach (DataGridViewRow row in cart.Rows)
             {
                 cartCSV = row.Cells[0].Value.ToString().Trim()+',';
                 cartCSV += row.Cells[1].Value.ToString().Trim()+',';
                 cartCSV += row.Cells[2].Value.ToString().Trim();
                 listFormated.Add(cartCSV);
-                File.WriteAllLines(@"C:\Windows\Temp\shop.txt", listFormated);
-             
+                File.WriteAllLines(@"C:\Windows\Temp\shop.txt", listFormated);             
             }
-         
+            if (cart.RowCount==0)
+            {
+                string x = "";
+                File.WriteAllText(@"C:\Windows\Temp\shop.txt", x);
+            }
         }
 
 

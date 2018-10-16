@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Windows.Forms;
 
 namespace shopProject
 {
@@ -71,17 +72,22 @@ namespace shopProject
                     Cart.Add(formated[0], int.Parse(formated[1]));
                     TotalNrOfProduct += int.Parse(formated[1]);
                     TotalPrise += int.Parse(formated[2]);
-
                 }
             }
             catch
             {
                 string x = "";
                 File.WriteAllText(@"C:\Windows\Temp\shop.txt", x);
-
-
             }
-
+        }
+        public void RemoveFromCart(DataGridView cartGrid)
+        {
+            string x = cartGrid.CurrentRow.Cells[0].Value.ToString();
+            int y = int.Parse(cartGrid.CurrentRow.Cells[2].Value.ToString());
+            Cart.Remove(x);
+            TotalPrise -= y;
+            CountTotalAmount();
+            
         }
 
 
