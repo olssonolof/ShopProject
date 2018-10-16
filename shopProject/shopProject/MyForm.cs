@@ -31,10 +31,10 @@ namespace shopProject
 
         public MyForm()
         {
-            #region UIControls
             nonformated = GetData();
             customer = new Customer();
             products = new List<Product> { };
+            #region UIControls
             foreach (string s in nonformated)
             {
                 products.Add(new Product(s));
