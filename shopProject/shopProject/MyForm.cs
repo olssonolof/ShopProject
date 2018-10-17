@@ -129,6 +129,27 @@ namespace shopProject
             {
                 Text = "Remove <<"
             };
+
+            PictureBox productPicture = new PictureBox
+            {
+                Dock = DockStyle.Fill,
+                //Image = "test",
+                BackColor = Color.Black,
+            };
+            Label productInfo = new Label
+            {
+                Text = "test!",
+                Dock = DockStyle.Fill,
+                
+            };
+            Label HeaderInfo = new Label
+            {
+                Dock = DockStyle.Bottom,
+                Font =new Font("Arial", 15),
+                Text = "Game information: ",
+            };
+
+
             #endregion  //GUI
             //            amountToBuy.Location = CenterToScreen();
 
@@ -137,18 +158,29 @@ namespace shopProject
             container.Controls.Add(data1, 0, 1);
             container.Controls.Add(infoContainer, 1, 1);
             container.Controls.Add(dataGridCart, 2, 1);
+
             container.SetColumnSpan(header, 100);
             container.SetColumnSpan(footer, 100);
 
             infoContainer.Controls.Add(infoContainerTable);
-            infoContainerTable.Controls.Add(amountToBuy);
-            infoContainerTable.SetColumnSpan(amountToBuy, 100);
-            infoContainerTable.RowStyles.Add(new RowStyle(SizeType.Percent, 32));
-            infoContainerTable.RowStyles.Add(new RowStyle(SizeType.Percent, 36));
-            infoContainerTable.RowStyles.Add(new RowStyle(SizeType.Percent, 32));
+
+            infoContainerTable.Controls.Add(HeaderInfo, 1, 0);
+
+            infoContainerTable.Controls.Add(productPicture, 0, 1);
+            infoContainerTable.Controls.Add(productInfo, 1, 1);
 
             infoContainerTable.Controls.Add(buy, 1, 2);
             infoContainerTable.Controls.Add(remove, 1, 2);
+
+
+
+            infoContainerTable.SetColumnSpan(amountToBuy, 100);
+            infoContainerTable.RowStyles.Add(new RowStyle(SizeType.Percent, 22));
+            infoContainerTable.RowStyles.Add(new RowStyle(SizeType.Percent, 46));
+            infoContainerTable.RowStyles.Add(new RowStyle(SizeType.Percent, 32));
+            infoContainerTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
+            infoContainerTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
+
 
 
             remove.Click += Remove_Clicked;
