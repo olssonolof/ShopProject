@@ -69,9 +69,8 @@ namespace shopProject
             footer = new Panel
             {
                 BackColor = Color.Gray,
-                Dock = DockStyle.Fill
+                Dock = DockStyle.Fill,
             };
-
             data1 = new DataGridView
             {
                 ColumnCount = 3,
@@ -85,6 +84,8 @@ namespace shopProject
                 BackgroundColor = SystemColors.Control,
                 MultiSelect = false,
                 AllowUserToResizeRows = false,
+                AllowUserToDeleteRows = false,
+                ReadOnly = true,
             };
             data1.Columns[0].FillWeight = 180;
             NameDataGrid(data1);
@@ -110,6 +111,8 @@ namespace shopProject
                 AllowUserToAddRows = false,
                 MultiSelect = false,
                 AllowUserToResizeRows = false,
+                AllowUserToDeleteRows = false,
+                ReadOnly = true,
             };
             dataGridCart.Columns[0].FillWeight = 180;
 
@@ -171,7 +174,6 @@ namespace shopProject
             productPicture = new PictureBox
             {
                 Dock = DockStyle.Fill,
-                //Image = "test",
                 BackColor = Color.Black,
                 SizeMode = PictureBoxSizeMode.Zoom,
 
@@ -180,7 +182,7 @@ namespace shopProject
             {
                 Text = "test!",
                 Dock = DockStyle.Fill,
-                Font = new Font("arial", 7),
+                Font = new Font("arial", 9),
 
             };
             Label HeaderInfo = new Label
@@ -232,7 +234,6 @@ namespace shopProject
             infoContainerTable.SetColumnSpan(amountToBuy, 100);
             infoContainerTable.RowStyles.Add(new RowStyle(SizeType.Percent, 12));
             infoContainerTable.RowStyles.Add(new RowStyle(SizeType.Percent, 56));
-            infoContainerTable.RowStyles.Add(new RowStyle(SizeType.Percent, 32));
             infoContainerTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
             infoContainerTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
 
@@ -260,10 +261,11 @@ namespace shopProject
 
             container.RowStyles.Add(new RowStyle(SizeType.Percent, 15));
             container.RowStyles.Add(new RowStyle(SizeType.Percent, 70));
-            container.RowStyles.Add(new RowStyle(SizeType.Percent, 15));
             container.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 32));
             container.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 36));
             container.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 32));
+
+
             UpdateCart();
         }
 
