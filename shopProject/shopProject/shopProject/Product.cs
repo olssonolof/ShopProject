@@ -15,6 +15,7 @@ namespace shopProject
         public int Year;
         public int Price;
         public Image Pic;
+        public string Summary;
 
         public Product(string formated)
         {
@@ -33,8 +34,9 @@ namespace shopProject
                 if (Name.Contains(z))
                 {
                     Pic = Image.FromFile(p);
+                    Summary = File.ReadAllText(@"summarys\"+z+".txt");
                 }
-            }
+                }
         }
     }
     class Customer

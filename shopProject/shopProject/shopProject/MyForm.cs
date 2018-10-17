@@ -27,6 +27,8 @@ namespace shopProject
         Button buy;
         Button clearCart;
         Button checkout;
+        Label productInfo = new Label();
+
 
         Customer customer;
 
@@ -174,10 +176,11 @@ namespace shopProject
                 SizeMode = PictureBoxSizeMode.Zoom,
 
             };
-            Label productInfo = new Label
+            productInfo = new Label
             {
                 Text = "test!",
                 Dock = DockStyle.Fill,
+                Font = new Font("arial", 7),
 
             };
             Label HeaderInfo = new Label
@@ -185,6 +188,7 @@ namespace shopProject
                 Dock = DockStyle.Bottom,
                 Font = new Font("Arial", 15),
                 Text = "Game information: ",
+                
             };
             TableLayoutPanel cartPanel = new TableLayoutPanel
             {
@@ -270,10 +274,11 @@ namespace shopProject
             {
                 if (item.Name == x)
                 {
-                    productPicture.Image = item.Pic; 
-
+                    productPicture.Image = item.Pic;
+                    productInfo.Text = item.Summary;
                 }
             }
+
         }
 
         private void Remove_Clicked(object sender, EventArgs e)
