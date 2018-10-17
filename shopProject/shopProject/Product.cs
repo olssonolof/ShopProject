@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace shopProject
 {
@@ -13,14 +14,27 @@ namespace shopProject
         public string Name;
         public int Year;
         public int Price;
+        public Image Pic;
 
         public Product(string formated)
         {
+            string[] pic = new string[] { @"shoppics\Battlefield.jpg", @"shoppics\Black.jpg", @"shoppics\Diablo.jpg", @"shoppics\GTA.jpg", @"shoppics\Lemmings.jpg", @"shoppics\Minecraft.jpg",
+            @"shoppics\Modern.jpg", @"shoppics\Need.jpg", @"shoppics\Battleground.jpg", @"shoppics\Sims.jpg", @"shoppics\Tetris.jpg", @"shoppics\Witcher.jpg", @"shoppics\WoW.jpg"};
             string[] x = formated.Split(',');
 
             Name = x[0];
             Year = int.Parse(x[1]);
             Price = int.Parse(x[2]);
+
+            foreach (string p in pic)
+            {
+                int y = p.IndexOf('.');
+                string z = p.Substring(9, y -9);
+                if (Name.Contains(z))
+                {
+                    Pic = Image.FromFile(p);
+                }
+            }
         }
     }
     class Customer
