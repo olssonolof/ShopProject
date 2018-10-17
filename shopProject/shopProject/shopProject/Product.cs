@@ -67,13 +67,8 @@ namespace shopProject
 
         }
         public void CountTotalAmount()
-        {
-            TotalNrOfProduct = 0;
-            foreach (KeyValuePair<string, int> nr in Cart)
-            {
-
-                TotalNrOfProduct += nr.Value;
-            }
+        {           
+            TotalNrOfProduct = Cart.Values.Sum(x => x);
         }
 
         public void ReadSaveCart()
