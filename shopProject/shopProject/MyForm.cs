@@ -22,9 +22,11 @@ namespace shopProject
         DataGridView dataGridCart;
         TableLayoutPanel infoContainerTable;
         NumericUpDown amountToBuy;
-
+        PictureBox productPicture;
+        Button buy;
         Customer customer;
-
+        Button remove;
+        Label HeaderInfo;
 
         string[] nonformated;
         List<Product> products;
@@ -49,19 +51,33 @@ namespace shopProject
             {
                 RowCount = 3,
                 ColumnCount = 3,
-                Dock = DockStyle.Fill
+                Dock = DockStyle.Fill,
+                BackColor = Color.Gainsboro,
             };
             Controls.Add(container);
 
             header = new Panel
             {
                 Dock = DockStyle.Fill,
-                BackColor = Color.Gray
+                BackColor = Color.Gainsboro,
+
+            };
+
+            Panel logo = new Panel
+            {
+                Dock = DockStyle.Left,
+                //BackColor = Color.FromArgb(229, 126, 49)
+            };
+            PictureBox logoPicture = new PictureBox
+            {
+                Image = Image.FromFile("logo.png"),
+                SizeMode = PictureBoxSizeMode.Zoom,
+                Dock = DockStyle.Fill,                
             };
 
             footer = new Panel
             {
-                BackColor = Color.Gray,
+                BackColor = Color.Gainsboro,
                 Dock = DockStyle.Fill
             };
 
@@ -120,21 +136,26 @@ namespace shopProject
                 Minimum = 1,
             };
 
-            Button buy = new Button
+            buy = new Button
             {
                 Text = "Buy >>",
 
             };
-            Button remove = new Button
+            remove = new Button
             {
                 Text = "Remove <<"
             };
+            Button purchase = new Button
+            {
+                Dock = DockStyle.Bottom,
+                Text = "Checkout",
+            };
 
-            PictureBox productPicture = new PictureBox
+            productPicture = new PictureBox
             {
                 Dock = DockStyle.Fill,
                 //Image = "test",
-                BackColor = Color.Black,
+                BackColor = Color.FromArgb(41,53,65),
             };
             Label productInfo = new Label
             {
@@ -142,11 +163,17 @@ namespace shopProject
                 Dock = DockStyle.Fill,
                 
             };
-            Label HeaderInfo = new Label
+            HeaderInfo = new Label
             {
                 Dock = DockStyle.Bottom,
                 Font =new Font("Arial", 15),
                 Text = "Game information: ",
+            };
+
+            DataGridView buttonHandler = new DataGridView
+            {
+                RowCount = 3
+
             };
 
 
@@ -154,6 +181,9 @@ namespace shopProject
             //            amountToBuy.Location = CenterToScreen();
 
             container.Controls.Add(header);
+            header.Controls.Add(logo);
+            logo.Controls.Add(logoPicture);
+
             container.Controls.Add(footer, 2, 2);
             container.Controls.Add(data1, 0, 1);
             container.Controls.Add(infoContainer, 1, 1);
@@ -175,11 +205,11 @@ namespace shopProject
 
 
             infoContainerTable.SetColumnSpan(amountToBuy, 100);
-            infoContainerTable.RowStyles.Add(new RowStyle(SizeType.Percent, 22));
-            infoContainerTable.RowStyles.Add(new RowStyle(SizeType.Percent, 46));
+            infoContainerTable.RowStyles.Add(new RowStyle(SizeType.Percent, 12));
+            infoContainerTable.RowStyles.Add(new RowStyle(SizeType.Percent, 56));
             infoContainerTable.RowStyles.Add(new RowStyle(SizeType.Percent, 32));
-            infoContainerTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
-            infoContainerTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
+            infoContainerTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 60));
+            infoContainerTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 40));
 
 
 
