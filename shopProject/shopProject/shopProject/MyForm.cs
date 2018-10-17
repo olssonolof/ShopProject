@@ -23,7 +23,10 @@ namespace shopProject
         TableLayoutPanel infoContainerTable;
         NumericUpDown amountToBuy;
         PictureBox productPicture = new PictureBox();
-
+        Button remove;
+        Button buy;
+        Button clearCart;
+        Button checkout;
 
         Customer customer;
 
@@ -122,15 +125,45 @@ namespace shopProject
                 Dock = DockStyle.Top,
                 Minimum = 1,
             };
-
-            Button buy = new Button
+            TableLayoutPanel buttonHandlerPanel = new TableLayoutPanel
             {
+
+                RowCount = 3,
+                Dock = DockStyle.Fill,
+                ColumnCount = 3,
+                
+            };
+
+
+            buy = new Button
+            {
+                Dock = DockStyle.Fill,
+                FlatStyle = FlatStyle.Flat,
                 Text = "Buy >>",
+                AutoSize = true,
 
             };
-            Button remove = new Button
+            remove = new Button
             {
-                Text = "Remove <<"
+                Size = new Size(150, 15),
+                FlatStyle = FlatStyle.Flat,
+                Text = "Remove <<",
+                AutoSize = true,
+                Dock = DockStyle.Fill
+            };
+            clearCart = new Button
+            {
+                Dock = DockStyle.Fill,
+                AutoSize = true,
+                FlatStyle = FlatStyle.Flat,
+                Text = "Clear Cart",
+            };
+            
+            checkout = new Button
+            {
+                Dock = DockStyle.Fill,
+                Text = "Checkout",
+
             };
 
             productPicture = new PictureBox
@@ -153,6 +186,12 @@ namespace shopProject
                 Font = new Font("Arial", 15),
                 Text = "Game information: ",
             };
+            TableLayoutPanel cartPanel = new TableLayoutPanel
+            {
+                RowCount = 2,
+                Dock = DockStyle.Fill,
+            };
+
 
 
             #endregion  //GUI
@@ -162,10 +201,15 @@ namespace shopProject
             container.Controls.Add(footer, 2, 2);
             container.Controls.Add(data1, 0, 1);
             container.Controls.Add(infoContainer, 1, 1);
-            container.Controls.Add(dataGridCart, 2, 1);
+            container.Controls.Add(cartPanel, 2, 1);
+            cartPanel.Controls.Add(dataGridCart,0,0);
+            cartPanel.Controls.Add(checkout, 0, 1);
+
 
             container.SetColumnSpan(header, 100);
             container.SetColumnSpan(footer, 100);
+            infoContainerTable.SetColumnSpan(buttonHandlerPanel, 100);
+
 
             infoContainer.Controls.Add(infoContainerTable);
 
@@ -174,8 +218,10 @@ namespace shopProject
             infoContainerTable.Controls.Add(productPicture, 0, 1);
             infoContainerTable.Controls.Add(productInfo, 1, 1);
 
-            infoContainerTable.Controls.Add(buy, 1, 2);
-            infoContainerTable.Controls.Add(remove, 1, 2);
+            infoContainerTable.Controls.Add(buttonHandlerPanel, 1, 2);
+            buttonHandlerPanel.Controls.Add(buy, 1, 0);
+            buttonHandlerPanel.Controls.Add(remove, 1, 1);
+            buttonHandlerPanel.Controls.Add(clearCart, 1, 2);
 
 
 
@@ -185,6 +231,19 @@ namespace shopProject
             infoContainerTable.RowStyles.Add(new RowStyle(SizeType.Percent, 32));
             infoContainerTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
             infoContainerTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
+
+
+
+
+            cartPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 90));
+            cartPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 10));
+
+            buttonHandlerPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 33));
+            buttonHandlerPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 33));
+            buttonHandlerPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 33));
+            buttonHandlerPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33));
+            buttonHandlerPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33));
+            buttonHandlerPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33));
 
 
 
