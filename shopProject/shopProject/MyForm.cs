@@ -77,7 +77,7 @@ namespace shopProject
                 AllowUserToAddRows = false,
                 BackgroundColor = SystemColors.Control,
                 MultiSelect = false,
-                AllowUserToResizeRows = false,               
+                AllowUserToResizeRows = false,
             };
             data1.Columns[0].FillWeight = 180;
             NameDataGrid(data1);
@@ -140,12 +140,12 @@ namespace shopProject
             {
                 Text = "test!",
                 Dock = DockStyle.Fill,
-                
+
             };
             Label HeaderInfo = new Label
             {
                 Dock = DockStyle.Bottom,
-                Font =new Font("Arial", 15),
+                Font = new Font("Arial", 15),
                 Text = "Game information: ",
             };
 
@@ -293,7 +293,11 @@ namespace shopProject
                 File.WriteAllText(@"C:\Windows\Temp\shop.txt", x);
             }
         }
-
+        public void GetImages()
+        {
+            string x = data1.CurrentRow.Cells[0].Value.ToString();
+            
+        }
 
 
     }
