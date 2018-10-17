@@ -41,7 +41,7 @@ namespace shopProject
             }
 
             Text = "Game Shop";
-            Size = new Size(800, 800);
+            Size = new Size(1200, 800);
             Font = new Font("Arial", 10);
 
 
@@ -76,10 +76,10 @@ namespace shopProject
                 Font = new Font("Arial", 8),
                 AllowUserToAddRows = false,
                 BackgroundColor = SystemColors.Control,
-
-
-
+                MultiSelect = false,
+                AllowUserToResizeRows = false,               
             };
+            data1.Columns[0].FillWeight = 180;
             NameDataGrid(data1);
 
             infoContainer = new Panel
@@ -100,9 +100,11 @@ namespace shopProject
                 Font = new Font("Arial", 8),
                 BackgroundColor = SystemColors.Control,
                 AllowUserToAddRows = false,
+                MultiSelect = false,
+                AllowUserToResizeRows = false,
+            };
+            dataGridCart.Columns[0].FillWeight = 180;
 
-
-        };
             NameDataGridCart(dataGridCart);
             infoContainerTable = new TableLayoutPanel
             {
@@ -121,7 +123,7 @@ namespace shopProject
             Button buy = new Button
             {
                 Text = "Buy >>",
-                
+
             };
             Button remove = new Button
             {
@@ -162,15 +164,15 @@ namespace shopProject
             container.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 32));
             container.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 36));
             container.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 32));
-            AddDataCart();
+            UpdateCart();
         }
 
         private void Remove_Clicked(object sender, EventArgs e)
         {
             customer.RemoveFromCart(dataGridCart);
             dataGridCart.Rows.Clear();
-            AddDataCart();
-            WriteData(dataGridCart);
+            UpdateCart();
+            UpdateData(dataGridCart);
         }
 
         static void NameDataGrid(DataGridView data)
@@ -211,20 +213,20 @@ namespace shopProject
                 if (x == game.Name)
                 {
                     customer.AddProductToCart(game);
-                 
+
                     dataGridCart.Rows.Clear();
-                  
-                    AddDataCart();
+
+                    UpdateCart();
                     amountToBuy.Value = 1;
-                    WriteData(dataGridCart);
+                    UpdateData(dataGridCart);
                     break;
 
                 }
             }
         }
 
-        public void AddDataCart()
-        {        
+        public void UpdateCart()
+        {
             foreach (KeyValuePair<string, int> x in customer.Cart)
             {
                 int z = 0;
@@ -241,19 +243,19 @@ namespace shopProject
 
             }
         }
-        public void WriteData(DataGridView cart)
-        {           
+        public void UpdateData(DataGridView cart)
+        {
             string cartCSV; ;
             List<string> listFormated = new List<string> { };
             foreach (DataGridViewRow row in cart.Rows)
             {
-                cartCSV = row.Cells[0].Value.ToString().Trim()+',';
-                cartCSV += row.Cells[1].Value.ToString().Trim()+',';
+                cartCSV = row.Cells[0].Value.ToString().Trim() + ',';
+                cartCSV += row.Cells[1].Value.ToString().Trim() + ',';
                 cartCSV += row.Cells[2].Value.ToString().Trim();
                 listFormated.Add(cartCSV);
-                File.WriteAllLines(@"C:\Windows\Temp\shop.txt", listFormated);             
+                File.WriteAllLines(@"C:\Windows\Temp\shop.txt", listFormated);
             }
-            if (cart.RowCount==0)
+            if (cart.RowCount == 0)
             {
                 string x = "";
                 File.WriteAllText(@"C:\Windows\Temp\shop.txt", x);
@@ -262,7 +264,7 @@ namespace shopProject
 
 
 
-        }
+    }
 
 }
 

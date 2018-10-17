@@ -82,12 +82,15 @@ namespace shopProject
         }
         public void RemoveFromCart(DataGridView cartGrid)
         {
-            string x = cartGrid.CurrentRow.Cells[0].Value.ToString();
-            int y = int.Parse(cartGrid.CurrentRow.Cells[2].Value.ToString());
-            Cart.Remove(x);
-            TotalPrise -= y;
-            CountTotalAmount();
-            
+            if (cartGrid.RowCount > 0)
+            {
+                string x = cartGrid.CurrentRow.Cells[0].Value.ToString();
+                int y = int.Parse(cartGrid.CurrentRow.Cells[2].Value.ToString());
+                Cart.Remove(x);
+                TotalPrise -= y;
+                CountTotalAmount();
+            }
+
         }
 
 
