@@ -28,8 +28,7 @@ namespace shopProject
         Button clearCart;
         Button checkout;
         Label productInfo = new Label();
-
-
+        PictureBox gradient;
         Customer customer;
 
 
@@ -62,15 +61,20 @@ namespace shopProject
 
             header = new Panel
             {
-                Dock = DockStyle.Fill,
+                Dock = DockStyle.Fill,                
                 BackColor = Color.Gray
             };
+            Panel xz = header;
+            createBackgroundGradient(xz);
+            
 
             footer = new Panel
             {
                 BackColor = Color.Gray,
                 Dock = DockStyle.Fill,
             };
+            Panel xy = footer;
+            createBackgroundGradient(xy);
             data1 = new DataGridView
             {
                 ColumnCount = 3,
@@ -94,7 +98,7 @@ namespace shopProject
             infoContainer = new Panel
             {
                 Dock = DockStyle.Fill,
-                BackColor = SystemColors.ControlDark
+                BackColor = SystemColors.Control,
 
             };
             AddData(data1);
@@ -125,14 +129,9 @@ namespace shopProject
             };
 
 
-            amountToBuy = new NumericUpDown
-            {
-                Dock = DockStyle.Top,
-                Minimum = 1,
-            };
+            
             TableLayoutPanel buttonHandlerPanel = new TableLayoutPanel
             {
-
                 RowCount = 3,
                 Dock = DockStyle.Fill,
                 ColumnCount = 3,
@@ -231,13 +230,11 @@ namespace shopProject
 
 
 
-            infoContainerTable.SetColumnSpan(amountToBuy, 100);
             infoContainerTable.RowStyles.Add(new RowStyle(SizeType.Percent, 12));
             infoContainerTable.RowStyles.Add(new RowStyle(SizeType.Percent, 56));
             infoContainerTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
             infoContainerTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
-
-
+            
 
 
             cartPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 90));
@@ -267,6 +264,17 @@ namespace shopProject
 
 
             UpdateCart();
+        }
+
+        private void createBackgroundGradient (Panel x)
+        {
+            gradient = new PictureBox
+            {
+                Dock = DockStyle.Fill,
+                ImageLocation = "https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-507917.jpg",
+                SizeMode = PictureBoxSizeMode.StretchImage,
+            };
+            x.Controls.Add(gradient);
         }
 
         private void ChangedSelektion(object sender, EventArgs e)
