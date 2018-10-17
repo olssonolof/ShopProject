@@ -22,6 +22,8 @@ namespace shopProject
         DataGridView dataGridCart;
         TableLayoutPanel infoContainerTable;
         NumericUpDown amountToBuy;
+        PictureBox productPicture = new PictureBox();
+
 
         Customer customer;
 
@@ -81,6 +83,7 @@ namespace shopProject
             };
             data1.Columns[0].FillWeight = 180;
             NameDataGrid(data1);
+            data1.SelectionChanged += ChangedSelektion;
 
             infoContainer = new Panel
             {
@@ -130,11 +133,13 @@ namespace shopProject
                 Text = "Remove <<"
             };
 
-            PictureBox productPicture = new PictureBox
+            productPicture = new PictureBox
             {
                 Dock = DockStyle.Fill,
                 //Image = "test",
                 BackColor = Color.Black,
+                SizeMode = PictureBoxSizeMode.Zoom,
+
             };
             Label productInfo = new Label
             {
@@ -175,8 +180,8 @@ namespace shopProject
 
 
             infoContainerTable.SetColumnSpan(amountToBuy, 100);
-            infoContainerTable.RowStyles.Add(new RowStyle(SizeType.Percent, 22));
-            infoContainerTable.RowStyles.Add(new RowStyle(SizeType.Percent, 46));
+            infoContainerTable.RowStyles.Add(new RowStyle(SizeType.Percent, 12));
+            infoContainerTable.RowStyles.Add(new RowStyle(SizeType.Percent, 56));
             infoContainerTable.RowStyles.Add(new RowStyle(SizeType.Percent, 32));
             infoContainerTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
             infoContainerTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
@@ -197,6 +202,19 @@ namespace shopProject
             container.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 36));
             container.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 32));
             UpdateCart();
+        }
+
+        private void ChangedSelektion(object sender, EventArgs e)
+        {
+            string x = data1.CurrentRow.Cells[0].Value.ToString();
+            foreach (Product item in products)
+            {
+                if (item.Name == x)
+                {
+                    productPicture.Image = item.Pic; 
+
+                }
+            }
         }
 
         private void Remove_Clicked(object sender, EventArgs e)
