@@ -29,7 +29,8 @@ namespace shopProject
         Label productInfo = new Label();
         PictureBox gradient;
         Customer customer;
-
+        TextBox discountTextBox;
+        Label TotalPriceLabel;
 
         string[] nonformated;
         List<Product> products;
@@ -171,8 +172,9 @@ namespace shopProject
 
             productPicture = new PictureBox
             {
-                Dock = DockStyle.Fill,
-                BackColor = Color.Black,
+                Dock = DockStyle.Top,
+                BackColor = SystemColors.Control,
+                Size = new Size(200, 150),
                 SizeMode = PictureBoxSizeMode.Zoom,
 
             };
@@ -192,11 +194,23 @@ namespace shopProject
             };
             TableLayoutPanel cartPanel = new TableLayoutPanel
             {
-                RowCount = 2,
+                RowCount = 3,
+                ColumnCount = 2,
                 Dock = DockStyle.Fill,
             };
-
-
+            discountTextBox = new TextBox
+            {
+                Dock = DockStyle.Fill,
+                BorderStyle = BorderStyle.FixedSingle,
+                Text = "Discount Code",
+                
+            };
+            discountTextBox.Click += DiscountTextSelectAll_OnClick;
+            TotalPriceLabel = new Label
+            {
+                AutoSize = true,
+                Text = "Total Price: " + customer.TotalPrise,
+            };
 
             #endregion  //GUI
 
@@ -206,8 +220,14 @@ namespace shopProject
             container.Controls.Add(data1, 0, 1);
             container.Controls.Add(infoContainer, 1, 1);
             container.Controls.Add(cartPanel, 2, 1);
+
+
             cartPanel.Controls.Add(dataGridCart, 0, 0);
-            cartPanel.Controls.Add(checkout, 0, 1);
+            cartPanel.Controls.Add(discountTextBox, 0, 1);
+            cartPanel.Controls.Add(TotalPriceLabel, 1, 1);
+            cartPanel.Controls.Add(checkout, 0, 2);
+            cartPanel.SetColumnSpan(dataGridCart, 100);
+            cartPanel.SetColumnSpan(checkout, 100);
 
 
             container.SetColumnSpan(header, 100);
@@ -236,8 +256,12 @@ namespace shopProject
 
 
 
-            cartPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 90));
-            cartPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 10));
+            cartPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 85));
+            cartPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 7));
+            cartPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
+            cartPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
+
+
 
             buttonHandlerPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 33));
             buttonHandlerPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 33));
@@ -255,7 +279,7 @@ namespace shopProject
             data1.CellDoubleClick += BuyClicked;
             dataGridCart.DoubleClick += Remove_Clicked;
             clearCart.Click += ClearCartPressed;
-            data1.KeyDown += Data1_KeyUp; 
+            data1.KeyDown += Data1_KeyUp;
             checkout.Click += Checkout_Click;
             this.FormClosed += ClosedWindow;
 
@@ -272,6 +296,11 @@ namespace shopProject
             UpdateCart();
         }
 
+        private void DiscountTextSelectAll_OnClick(object sender, EventArgs e)
+        {
+            discountTextBox.SelectAll();
+        }
+
         private void Checkout_Click(object sender, EventArgs e)
         {
             if (dataGridCart.Rows.Count > 0)
@@ -279,12 +308,12 @@ namespace shopProject
                 if (MessageBox.Show("Are You sure You want to complete the checkout? ?", "Confirm buy", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     string total = "";
-                    foreach  (KeyValuePair<string, int> game in customer.Cart)
+                    foreach (KeyValuePair<string, int> game in customer.Cart)
                     {
-                        total += game.Key + ": "+game.Value +"\n";
+                        total += game.Key + ": " + game.Value + "\n";
                     }
 
-                    MessageBox.Show("*****Your receipt:*****\n" +total +"\nTotal number of products: "+customer.TotalNrOfProduct+"\nTotal cost: $"+customer.TotalPrise , "Receipt");
+                    MessageBox.Show("*****Your receipt:*****\n" + total + "\nTotal number of products: " + customer.TotalNrOfProduct + "\nTotal cost: $" + customer.TotalPrise, "Receipt");
                     string x = "";
                     File.WriteAllText(@"C:\Windows\Temp\shop.txt", x);
                     customer = new Customer();
@@ -298,7 +327,7 @@ namespace shopProject
         private void Data1_KeyUp(object sender, KeyEventArgs e)
         {
 
-            if (e.KeyCode == Keys.Enter) BuyProduct();         
+            if (e.KeyCode == Keys.Enter) BuyProduct();
         }
 
         private void ClosedWindow(object sender, FormClosedEventArgs e)
@@ -320,6 +349,7 @@ namespace shopProject
             File.WriteAllText(@"C:\Windows\Temp\shop.txt", x);
             customer = new Customer();
             UpdateCart();
+            TotalPriceLabel.Text = "Total Price: " + customer.TotalPrise;
         }
 
         private void MouseOverButton(object sender, EventArgs e)
@@ -365,7 +395,8 @@ namespace shopProject
             customer.RemoveFromCart(dataGridCart);
             dataGridCart.Rows.Clear();
             UpdateCart();
-            ;
+            TotalPriceLabel.Text = "Total Price: " + customer.TotalPrise;
+
         }
 
         static void NameDataGrid(DataGridView data)
@@ -440,6 +471,8 @@ namespace shopProject
         }
         public void UpdateData(DataGridView cart)
         {
+            TotalPriceLabel.Text = "Total Price: " + customer.TotalPrise;
+
             string cartCSV; ;
             List<string> listFormated = new List<string> { };
             foreach (DataGridViewRow row in cart.Rows)
