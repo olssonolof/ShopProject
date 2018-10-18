@@ -30,13 +30,13 @@ namespace shopProject
             foreach (string p in pic)
             {
                 int y = p.IndexOf('.');
-                string z = p.Substring(9, y -9);
+                string z = p.Substring(9, y - 9);
                 if (Name.Contains(z))
                 {
                     Pic = Image.FromFile(p);
-                    Summary = File.ReadAllText(@"summarys\"+z+".txt");
+                    Summary = File.ReadAllText(@"summarys\" + z + ".txt");
                 }
-                }
+            }
         }
     }
     class Customer
@@ -44,7 +44,7 @@ namespace shopProject
         public Dictionary<String, int> Cart = new Dictionary<String, int> { };
         public int TotalPrise;
         public int TotalNrOfProduct;
-        public Double Discount;
+        public Double Discount = 1;
 
 
         public Customer()
@@ -67,7 +67,7 @@ namespace shopProject
 
         }
         public void CountTotalAmount()
-        {           
+        {
             TotalNrOfProduct = Cart.Values.Sum(x => x);
         }
 
@@ -105,17 +105,17 @@ namespace shopProject
         }
         public bool ReadDiscount(string text)
         {
-            
+            string text2 = text.ToUpper();
             string[] discount = File.ReadAllLines(@"discount.txt");
             foreach (string item in discount)
             {
                 string[] formated = item.Split(',');
-                if (formated[0].Contains(text))
+                if (text2.Contains(formated[0])) //(formated[0].Contains(text2) && text.Length > 3)
                 {
-                    Discount = 1-(double.Parse(formated[1])/100);
+                    Discount = 1 - (double.Parse(formated[1]) / 100);
                     return true;
                 }
-                
+
             }
             return false;
         }
