@@ -44,7 +44,7 @@ namespace shopProject
         public Dictionary<String, int> Cart = new Dictionary<String, int> { };
         public int TotalPrise;
         public int TotalNrOfProduct;
-        public int Discount;
+        public Double Discount;
 
 
         public Customer()
@@ -103,7 +103,22 @@ namespace shopProject
             }
 
         }
-
+        public bool ReadDiscount(string text)
+        {
+            
+            string[] discount = File.ReadAllLines(@"discount.txt");
+            foreach (string item in discount)
+            {
+                string[] formated = item.Split(',');
+                if (formated[0].Contains(text))
+                {
+                    Discount = 1-(double.Parse(formated[1])/100);
+                    return true;
+                }
+                
+            }
+            return false;
+        }
 
     }
 

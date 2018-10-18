@@ -203,7 +203,7 @@ namespace shopProject
                 Dock = DockStyle.Fill,
                 BorderStyle = BorderStyle.FixedSingle,
                 Text = "Discount Code",
-                
+
             };
             discountTextBox.Click += DiscountTextSelectAll_OnClick;
             TotalPriceLabel = new Label
@@ -281,6 +281,7 @@ namespace shopProject
             clearCart.Click += ClearCartPressed;
             data1.KeyDown += Data1_KeyUp;
             checkout.Click += Checkout_Click;
+            discountTextBox.TextChanged += DiscountTextBox_TextChanged;
             this.FormClosed += ClosedWindow;
 
 
@@ -294,6 +295,17 @@ namespace shopProject
 
 
             UpdateCart();
+        }
+
+        private void DiscountTextBox_TextChanged(object sender, EventArgs e)
+        {
+            bool isDoscount = customer.ReadDiscount(discountTextBox.Text);
+            TotalPrice();
+            if (isDoscount)
+            {
+                discountTextBox.BackColor = Color.Green;
+
+            }
         }
 
         private void DiscountTextSelectAll_OnClick(object sender, EventArgs e)
@@ -349,7 +361,7 @@ namespace shopProject
             File.WriteAllText(@"C:\Windows\Temp\shop.txt", x);
             customer = new Customer();
             UpdateCart();
-            TotalPriceLabel.Text = "Total Price: " + customer.TotalPrise;
+            TotalPrice();
         }
 
         private void MouseOverButton(object sender, EventArgs e)
@@ -395,7 +407,7 @@ namespace shopProject
             customer.RemoveFromCart(dataGridCart);
             dataGridCart.Rows.Clear();
             UpdateCart();
-            TotalPriceLabel.Text = "Total Price: " + customer.TotalPrise;
+            TotalPrice();
 
         }
 
@@ -471,7 +483,7 @@ namespace shopProject
         }
         public void UpdateData(DataGridView cart)
         {
-            TotalPriceLabel.Text = "Total Price: " + customer.TotalPrise;
+            TotalPrice();
 
             string cartCSV; ;
             List<string> listFormated = new List<string> { };
@@ -513,7 +525,10 @@ namespace shopProject
                 }
             }
         }
-
+        public void TotalPrice()
+        {
+            TotalPriceLabel.Text = "Total Price: " + (customer.TotalPrise * customer.Discount);
+        }
 
     }
 
