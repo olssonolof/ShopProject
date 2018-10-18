@@ -21,7 +21,6 @@ namespace shopProject
         Panel footer;
         DataGridView dataGridCart;
         TableLayoutPanel infoContainerTable;
-        NumericUpDown amountToBuy;
         PictureBox productPicture = new PictureBox();
         Button remove;
         Button buy;
@@ -200,7 +199,7 @@ namespace shopProject
 
 
             #endregion  //GUI
-            //            amountToBuy.Location = CenterToScreen();
+            
 
             container.Controls.Add(header);
             container.Controls.Add(footer, 2, 2);
@@ -247,13 +246,14 @@ namespace shopProject
             buttonHandlerPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33));
             buttonHandlerPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33));
 
-
-
+            remove.MouseEnter += MouseOverButton;
+            buy.MouseEnter += MouseOverButton;
+            clearCart.MouseEnter += MouseOverButton;
+            checkout.MouseEnter += MouseOverButton;
             remove.Click += Remove_Clicked;
             buy.Click += BuyClicked;
 
-            //infoContainer.Controls.Add(infoContainerTable);
-            //infoContainer.Controls.Add(infoContainerTable);
+           
 
 
             container.RowStyles.Add(new RowStyle(SizeType.Percent, 15));
@@ -264,6 +264,18 @@ namespace shopProject
 
 
             UpdateCart();
+        }
+
+        private void MouseOverButton(object sender, EventArgs e)
+        {
+            ToolTip tp = new ToolTip
+            {
+                ShowAlways = true, ReshowDelay = 500,
+            };
+            if (sender == buy) tp.SetToolTip(buy, "Push here to add product to cart");
+            else if (sender == remove) tp.SetToolTip(remove, "Push here to remove product from cart");
+            else if (sender == clearCart) tp.SetToolTip(clearCart, "Push here to clear the cart");
+            else if (sender == checkout) tp.SetToolTip(checkout, "Push here to checkout");
         }
 
         private void createBackgroundGradient (Panel x)
@@ -341,7 +353,6 @@ namespace shopProject
                     dataGridCart.Rows.Clear();
 
                     UpdateCart();
-                    amountToBuy.Value = 1;
                     UpdateData(dataGridCart);
                     break;
 
@@ -395,7 +406,3 @@ namespace shopProject
     }
 
 }
-
-
-
-//selectionChanged
