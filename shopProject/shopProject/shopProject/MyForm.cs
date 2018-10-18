@@ -60,12 +60,12 @@ namespace shopProject
 
             header = new Panel
             {
-                Dock = DockStyle.Fill,                
+                Dock = DockStyle.Fill,
                 BackColor = Color.Gray
             };
             Panel xz = header;
             createBackgroundGradient(xz);
-            
+
 
             footer = new Panel
             {
@@ -128,13 +128,13 @@ namespace shopProject
             };
 
 
-            
+
             TableLayoutPanel buttonHandlerPanel = new TableLayoutPanel
             {
                 RowCount = 3,
                 Dock = DockStyle.Fill,
                 ColumnCount = 3,
-                
+
             };
 
 
@@ -161,7 +161,7 @@ namespace shopProject
                 FlatStyle = FlatStyle.Flat,
                 Text = "Clear Cart",
             };
-            
+
             checkout = new Button
             {
                 Dock = DockStyle.Fill,
@@ -188,7 +188,7 @@ namespace shopProject
                 Dock = DockStyle.Bottom,
                 Font = new Font("Arial", 15),
                 Text = "Game information: ",
-                
+
             };
             TableLayoutPanel cartPanel = new TableLayoutPanel
             {
@@ -199,14 +199,14 @@ namespace shopProject
 
 
             #endregion  //GUI
-            
+
 
             container.Controls.Add(header);
             container.Controls.Add(footer, 2, 2);
             container.Controls.Add(data1, 0, 1);
             container.Controls.Add(infoContainer, 1, 1);
             container.Controls.Add(cartPanel, 2, 1);
-            cartPanel.Controls.Add(dataGridCart,0,0);
+            cartPanel.Controls.Add(dataGridCart, 0, 0);
             cartPanel.Controls.Add(checkout, 0, 1);
 
 
@@ -233,7 +233,7 @@ namespace shopProject
             infoContainerTable.RowStyles.Add(new RowStyle(SizeType.Percent, 56));
             infoContainerTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
             infoContainerTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
-            
+
 
 
             cartPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 90));
@@ -252,8 +252,12 @@ namespace shopProject
             checkout.MouseEnter += MouseOverButton;
             remove.Click += Remove_Clicked;
             buy.Click += BuyClicked;
+            data1.CellDoubleClick += BuyClicked;
+            dataGridCart.DoubleClick += Remove_Clicked;
+            clearCart.Click += ClearCartPressed;
+            this.FormClosed += ClosedWindow;
 
-           
+
 
 
             container.RowStyles.Add(new RowStyle(SizeType.Percent, 15));
@@ -266,143 +270,167 @@ namespace shopProject
             UpdateCart();
         }
 
-        private void MouseOverButton(object sender, EventArgs e)
+        private void ClosedWindow(object sender, FormClosedEventArgs e)
         {
-            ToolTip tp = new ToolTip
+            if (dataGridCart.Rows.Count > 0)
             {
-                ShowAlways = true, ReshowDelay = 500,
-            };
-            if (sender == buy) tp.SetToolTip(buy, "Push here to add product to cart");
-            else if (sender == remove) tp.SetToolTip(remove, "Push here to remove product from cart");
-            else if (sender == clearCart) tp.SetToolTip(clearCart, "Push here to clear the cart");
-            else if (sender == checkout) tp.SetToolTip(checkout, "Push here to checkout");
-        }
-
-        private void createBackgroundGradient (Panel x)
-        {
-            gradient = new PictureBox
-            {
-                Dock = DockStyle.Fill,
-                ImageLocation = "https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-507917.jpg",
-                SizeMode = PictureBoxSizeMode.StretchImage,
-            };
-            x.Controls.Add(gradient);
-        }
-
-        private void ChangedSelektion(object sender, EventArgs e)
-        {
-            string x = data1.CurrentRow.Cells[0].Value.ToString();
-            foreach (Product item in products)
-            {
-                if (item.Name == x)
+                if (MessageBox.Show("Do You want to save the cart? ?", "Save cart", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
                 {
-                    productPicture.Image = item.Pic;
-                    productInfo.Text = item.Summary;
+                    string x = "";
+                    File.WriteAllText(@"C:\Windows\Temp\shop.txt", x);
+
                 }
             }
 
-        }
-
-        private void Remove_Clicked(object sender, EventArgs e)
-        {
-            customer.RemoveFromCart(dataGridCart);
-            dataGridCart.Rows.Clear();
-            UpdateCart();
-            UpdateData(dataGridCart);
-        }
-
-        static void NameDataGrid(DataGridView data)
-        {
-            data.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            data.Columns[0].Name = "Game";
-            data.Columns[1].Name = "Release year";
-            data.Columns[2].Name = "Price";
-
-        }
-        static void NameDataGridCart(DataGridView data)
-        {
-            data.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            data.Columns[0].Name = "Game";
-            data.Columns[1].Name = "Amount";
-            data.Columns[2].Name = "Price";
-        }
-
-        static string[] GetData()
-        {
-
-            return File.ReadAllLines("products.csv");
-        }
-        public void AddData(DataGridView data)
-        {
-            foreach (Product x in products)
-            {
-                data1.Rows.Add(x.Name, x.Year, x.Price);
             }
-        }
-
-
-        public void BuyClicked(object sender, EventArgs e)
-        {
-            string x = data1.CurrentRow.Cells[0].Value.ToString();
-            foreach (Product game in products)
-            {
-                if (x == game.Name)
-                {
-                    customer.AddProductToCart(game);
-
-                    dataGridCart.Rows.Clear();
-
-                    UpdateCart();
-                    UpdateData(dataGridCart);
-                    break;
-
-                }
-            }
-        }
-
-        public void UpdateCart()
-        {
-            foreach (KeyValuePair<string, int> x in customer.Cart)
-            {
-                int z = 0;
-                for (int i = 0; i < products.Count; i++)
-                {
-                    if (products[i].Name == x.Key)
-                    {
-                        z = products[i].Price;
-                        break;
-                    }
-                }
-                dataGridCart.Rows.Add(x.Key, x.Value, x.Value * z);
-                customer.CountTotalAmount();
-
-            }
-        }
-        public void UpdateData(DataGridView cart)
-        {
-            string cartCSV; ;
-            List<string> listFormated = new List<string> { };
-            foreach (DataGridViewRow row in cart.Rows)
-            {
-                cartCSV = row.Cells[0].Value.ToString().Trim() + ',';
-                cartCSV += row.Cells[1].Value.ToString().Trim() + ',';
-                cartCSV += row.Cells[2].Value.ToString().Trim();
-                listFormated.Add(cartCSV);
-                File.WriteAllLines(@"C:\Windows\Temp\shop.txt", listFormated);
-            }
-            if (cart.RowCount == 0)
+            private void ClearCartPressed(object sender, EventArgs e)
             {
                 string x = "";
                 File.WriteAllText(@"C:\Windows\Temp\shop.txt", x);
+                customer = new Customer();
+                UpdateCart();
             }
-        }
-        public void GetImages()
-        {
-            string x = data1.CurrentRow.Cells[0].Value.ToString();
-            
-        }
 
+            private void MouseOverButton(object sender, EventArgs e)
+            {
+                ToolTip tp = new ToolTip
+                {
+                    ShowAlways = true,
+                    ReshowDelay = 500,
+                };
+                if (sender == buy) tp.SetToolTip(buy, "Click here to add product to cart");
+                else if (sender == remove) tp.SetToolTip(remove, "Click here to remove product from cart");
+                else if (sender == clearCart) tp.SetToolTip(clearCart, "Click here to clear the cart");
+                else if (sender == checkout) tp.SetToolTip(checkout, "Click here to checkout");
+            }
+
+            private void createBackgroundGradient(Panel x)
+            {
+                gradient = new PictureBox
+                {
+                    Dock = DockStyle.Fill,
+                    ImageLocation = "https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-507917.jpg",
+                    SizeMode = PictureBoxSizeMode.StretchImage,
+                };
+                x.Controls.Add(gradient);
+            }
+
+            private void ChangedSelektion(object sender, EventArgs e)
+            {
+                string x = data1.CurrentRow.Cells[0].Value.ToString();
+                foreach (Product item in products)
+                {
+                    if (item.Name == x)
+                    {
+                        productPicture.Image = item.Pic;
+                        productInfo.Text = item.Summary;
+                    }
+                }
+
+            }
+
+            private void Remove_Clicked(object sender, EventArgs e)
+            {
+                customer.RemoveFromCart(dataGridCart);
+                dataGridCart.Rows.Clear();
+                UpdateCart();
+                ;
+            }
+
+            static void NameDataGrid(DataGridView data)
+            {
+                data.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                data.Columns[0].Name = "Game";
+                data.Columns[1].Name = "Release year";
+                data.Columns[2].Name = "Price";
+
+            }
+            static void NameDataGridCart(DataGridView data)
+            {
+                data.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                data.Columns[0].Name = "Game";
+                data.Columns[1].Name = "Amount";
+                data.Columns[2].Name = "Price";
+            }
+
+            static string[] GetData()
+            {
+
+                return File.ReadAllLines("products.csv");
+            }
+            public void AddData(DataGridView data)
+            {
+                foreach (Product x in products)
+                {
+                    data1.Rows.Add(x.Name, x.Year, x.Price);
+                }
+            }
+
+
+            public void BuyClicked(object sender, EventArgs e)
+            {
+                string x = data1.CurrentRow.Cells[0].Value.ToString();
+                foreach (Product game in products)
+                {
+                    if (x == game.Name)
+                    {
+                        customer.AddProductToCart(game);
+
+                        //   dataGridCart.Rows.Clear();
+
+                        UpdateCart();
+                        UpdateData(dataGridCart);
+                        break;
+
+                    }
+                }
+            }
+
+            public void UpdateCart()
+            {
+                dataGridCart.Rows.Clear();
+
+                foreach (KeyValuePair<string, int> x in customer.Cart)
+                {
+                    int z = 0;
+                    for (int i = 0; i < products.Count; i++)
+                    {
+                        if (products[i].Name == x.Key)
+                        {
+                            z = products[i].Price;
+                            break;
+                        }
+                    }
+                    dataGridCart.Rows.Add(x.Key, x.Value, x.Value * z);
+                    customer.CountTotalAmount();
+
+                }
+            }
+            public void UpdateData(DataGridView cart)
+            {
+                string cartCSV; ;
+                List<string> listFormated = new List<string> { };
+                foreach (DataGridViewRow row in cart.Rows)
+                {
+                    cartCSV = row.Cells[0].Value.ToString().Trim() + ',';
+                    cartCSV += row.Cells[1].Value.ToString().Trim() + ',';
+                    cartCSV += row.Cells[2].Value.ToString().Trim();
+                    listFormated.Add(cartCSV);
+                    File.WriteAllLines(@"C:\Windows\Temp\shop.txt", listFormated);
+                }
+                if (cart.RowCount == 0)
+                {
+                    string x = "";
+                    File.WriteAllText(@"C:\Windows\Temp\shop.txt", x);
+                }
+            }
+            public void GetImages()
+            {
+                string x = data1.CurrentRow.Cells[0].Value.ToString();
+
+            }
+
+
+        }
 
     }
-
-}
