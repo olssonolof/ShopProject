@@ -65,7 +65,7 @@ namespace shopProject
                 BackColor = Color.Gray
             };
             Panel xz = header;
-            createBackgroundGradient(xz);
+            CreateBackgroundGradient(xz);
 
 
             footer = new Panel
@@ -74,7 +74,7 @@ namespace shopProject
                 Dock = DockStyle.Fill,
             };
             Panel xy = footer;
-            createBackgroundGradient(xy);
+            CreateBackgroundGradient(xy);
             data1 = new DataGridView
             {
                 ColumnCount = 3,
@@ -299,12 +299,11 @@ namespace shopProject
 
         private void DiscountTextBox_TextChanged(object sender, EventArgs e)
         {
-            bool isDoscount = customer.ReadDiscount(discountTextBox.Text);
+            bool isDiscount = customer.ReadDiscount(discountTextBox.Text);
             TotalPrice();
-            if (isDoscount)
+            if (isDiscount)
             {
                 discountTextBox.BackColor = Color.Green;
-
             }
         }
 
@@ -377,7 +376,7 @@ namespace shopProject
             else if (sender == checkout) tp.SetToolTip(checkout, "Click here to checkout");
         }
 
-        private void createBackgroundGradient(Panel x)
+        private void CreateBackgroundGradient(Panel x)
         {
             gradient = new PictureBox
             {

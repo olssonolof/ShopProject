@@ -110,12 +110,11 @@ namespace shopProject
             foreach (string item in discount)
             {
                 string[] formated = item.Split(',');
-                if (text2.Contains(formated[0])) //(formated[0].Contains(text2) && text.Length > 3)
+                if (text2.Contains(formated[0])) 
                 {
                     Discount = 1 - (double.Parse(formated[1]) / 100);
                     return true;
                 }
-
             }
             return false;
         }
