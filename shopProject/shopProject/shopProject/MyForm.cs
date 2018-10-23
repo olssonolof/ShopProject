@@ -65,7 +65,7 @@ namespace shopProject
                 BackColor = Color.Gray
             };
             Panel xz = header;
-            CreateBackgroundGradient(xz);
+            CreateBackgroundImage(xz);
 
 
             footer = new Panel
@@ -74,7 +74,7 @@ namespace shopProject
                 Dock = DockStyle.Fill,
             };
             Panel xy = footer;
-            CreateBackgroundGradient(xy);
+            CreateBackgroundImage(xy);
             data1 = new DataGridView
             {
                 ColumnCount = 3,
@@ -379,7 +379,7 @@ namespace shopProject
             else if (sender == checkout) tp.SetToolTip(checkout, "Click here to checkout");
         }
 
-        private void CreateBackgroundGradient(Panel x)
+        private void CreateBackgroundImage(Panel x)
         {
             gradient = new PictureBox
             {
@@ -446,7 +446,7 @@ namespace shopProject
         public void BuyClicked(object sender, EventArgs e)
         {
             BuyProduct();
-           
+
         }
 
         public void UpdateCart()
@@ -503,9 +503,6 @@ namespace shopProject
                 if (x == game.Name)
                 {
                     customer.AddProductToCart(game);
-
-                    //   dataGridCart.Rows.Clear();
-
                     UpdateCart();
                     UpdateData(dataGridCart);
                     break;

@@ -101,7 +101,6 @@ namespace shopProject
                 TotalPrise -= y;
                 CountTotalAmount();
             }
-
         }
         public bool ReadDiscount(string text)
         {
@@ -110,10 +109,15 @@ namespace shopProject
             foreach (string item in discount)
             {
                 string[] formated = item.Split(',');
-                if (text2.Contains(formated[0])) 
+                if ((text2.Contains(formated[0]) && Discount == 1) || (text2.Contains(formated[0]) && (100-Double.Parse(formated[1])) < Discount * 100))
                 {
                     Discount = 1 - (double.Parse(formated[1]) / 100);
+                    MessageBox.Show("You have " + (100 - (Discount * 100)) + "% discount!");
                     return true;
+                }
+                else if (text2.Contains(formated[0]) && (100 - double.Parse(formated[1])) > Discount * 100)
+                {
+                    MessageBox.Show("You already have a active discount code with a higher value.");
                 }
             }
             return false;
