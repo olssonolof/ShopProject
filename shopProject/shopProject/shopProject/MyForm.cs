@@ -209,7 +209,7 @@ namespace shopProject
             TotalPriceLabel = new Label
             {
                 AutoSize = true,
-                Text = "Total Price: " + customer.TotalPrise,
+                Text = "Total Price: " + customer.TotalPrise * customer.Discount,
             };
 
             #endregion  //GUI
@@ -324,10 +324,13 @@ namespace shopProject
                         total += game.Key + ": " + game.Value + "\n";
                     }
 
-                    MessageBox.Show("*****Your receipt:*****\n" + total + "\nTotal number of products: " + customer.TotalNrOfProduct + "\nTotal cost: $" + customer.TotalPrise, "Receipt");
+                    MessageBox.Show("*****Your receipt:*****\n" + total + "\nTotal number of products: " + customer.TotalNrOfProduct + "\nTotal cost: $" + customer.TotalPrise * customer.Discount, "Receipt");
                     string x = "";
                     File.WriteAllText(@"C:\Windows\Temp\shop.txt", x);
                     customer = new Customer();
+                    customer.Discount = 1;
+                    discountTextBox.BackColor = SystemColors.Control;
+                    discountTextBox.Text = "Discount Code";
 
                     UpdateCart();
 
@@ -443,21 +446,7 @@ namespace shopProject
         public void BuyClicked(object sender, EventArgs e)
         {
             BuyProduct();
-            //string x = data1.CurrentRow.Cells[0].Value.ToString();
-            //foreach (Product game in products)
-            //{
-            //    if (x == game.Name)
-            //    {
-            //        customer.AddProductToCart(game);
-
-            //        //   dataGridCart.Rows.Clear();
-
-            //        UpdateCart();
-            //        UpdateData(dataGridCart);
-            //        break;
-
-            //    }
-            //}
+           
         }
 
         public void UpdateCart()
