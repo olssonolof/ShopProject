@@ -458,6 +458,7 @@ namespace shopProject
                 int z = 0;
                 for (int i = 0; i < products.Count; i++)
                 {
+                    // Lägger till rätt pris i datagridview(cart).
                     if (products[i].Name == x.Key)
                     {
                         z = products[i].Price;
