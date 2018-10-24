@@ -80,6 +80,9 @@
     <Content Include="shoppics\Lemmings.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="shoppics\Mario.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="shoppics\Minecraft.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

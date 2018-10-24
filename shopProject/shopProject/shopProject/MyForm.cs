@@ -34,9 +34,9 @@ namespace shopProject
 
         string[] nonformated;
         List<Product> products;
-
         public MyForm()
         {
+            Icon = new Icon(@"shoppics\Mario.ico");
             #region UIControls
             nonformated = GetData();
             customer = new Customer();
@@ -262,13 +262,21 @@ namespace shopProject
             cartPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
 
 
+            for (int i = 0; i < 3; i++)
+            {
+            buttonHandlerPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 33));
+            buttonHandlerPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33));
+            }
+            //buttonHandlerPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 33));
+            //buttonHandlerPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 33));
+            //buttonHandlerPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33));
+            //buttonHandlerPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33));
 
-            buttonHandlerPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 33));
-            buttonHandlerPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 33));
-            buttonHandlerPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 33));
-            buttonHandlerPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33));
-            buttonHandlerPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33));
-            buttonHandlerPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33));
+            container.RowStyles.Add(new RowStyle(SizeType.Percent, 15));
+            container.RowStyles.Add(new RowStyle(SizeType.Percent, 70));
+            container.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 32));
+            container.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 36));
+            container.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 32));
 
             remove.MouseEnter += MouseOverButton;
             buy.MouseEnter += MouseOverButton;
@@ -287,11 +295,6 @@ namespace shopProject
 
 
 
-            container.RowStyles.Add(new RowStyle(SizeType.Percent, 15));
-            container.RowStyles.Add(new RowStyle(SizeType.Percent, 70));
-            container.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 32));
-            container.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 36));
-            container.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 32));
 
 
             UpdateCart();
@@ -325,11 +328,11 @@ namespace shopProject
                     //    total += game.Key + ": " + game.Value + "\n";
                     //}
                     foreach (DataGridViewRow row in dataGridCart.Rows)
-                    {                        
-                        total += "Product: "+row.Cells[0].Value.ToString() + '\t';
-                        total += "#"+row.Cells[1].Value.ToString() + '\t';
+                    {
+                        total += "Product: " + row.Cells[0].Value.ToString() + '\t';
+                        total += "#" + row.Cells[1].Value.ToString() + '\t';
                         total += "$" + row.Cells[2].Value.ToString() + '\n';
-                        
+
                     }
                     MessageBox.Show("*****Your receipt:*****\n" + total + "\nTotal number of products: " + customer.TotalNrOfProduct + "\nTotal cost: $" + customer.TotalPrise * customer.Discount, "Receipt");
                     string x = "";
