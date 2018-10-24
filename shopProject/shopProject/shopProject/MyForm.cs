@@ -264,8 +264,8 @@ namespace shopProject
 
             for (int i = 0; i < 3; i++)
             {
-            buttonHandlerPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 33));
-            buttonHandlerPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33));
+                buttonHandlerPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 33));
+                buttonHandlerPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33));
             }
             //buttonHandlerPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 33));
             //buttonHandlerPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 33));
@@ -320,29 +320,8 @@ namespace shopProject
             if (dataGridCart.Rows.Count > 0)
             {
                 if (MessageBox.Show("Are You sure You want to complete the checkout? ?", "Confirm buy", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                {
-
-                    string total = "";
-                    //foreach (KeyValuePair<string, int> game in customer.Cart)
-                    //{
-                    //    total += game.Key + ": " + game.Value + "\n";
-                    //}
-                    foreach (DataGridViewRow row in dataGridCart.Rows)
-                    {
-                        total += "Product: " + row.Cells[0].Value.ToString() + '\t';
-                        total += "#" + row.Cells[1].Value.ToString() + '\t';
-                        total += "$" + row.Cells[2].Value.ToString() + '\n';
-
-                    }
-                    MessageBox.Show("*****Your receipt:*****\n" + total + "\nTotal number of products: " + customer.TotalNrOfProduct + "\nTotal cost: $" + customer.TotalPrise * customer.Discount, "Receipt");
-                    string x = "";
-                    File.WriteAllText(@"C:\Windows\Temp\shop.txt", x);
-                    customer = new Customer();
-                    customer.Discount = 1;
-                    discountTextBox.BackColor = SystemColors.Control;
-                    discountTextBox.Text = "Discount Code";
-
-                    UpdateCart();
+                {                    
+                    CreateReceipt();
 
                 }
             }
@@ -387,6 +366,78 @@ namespace shopProject
             else if (sender == remove) tp.SetToolTip(remove, "Click here to remove product from cart");
             else if (sender == clearCart) tp.SetToolTip(clearCart, "Click here to clear the cart");
             else if (sender == checkout) tp.SetToolTip(checkout, "Click here to checkout");
+        }
+
+        private void CreateReceipt()
+        {
+            Form receipt = new Form
+            {
+                Size = new Size(300, 300),
+                Font = new Font("Arial", 14),
+            };
+
+            TableLayoutPanel receiptContainer = new TableLayoutPanel
+            {
+                Dock = DockStyle.Fill,
+                BackColor = SystemColors.Control,
+                RowCount = 2
+            };
+            
+
+            #region reciptMaker
+            DataGridView dataCart = new DataGridView
+            {
+                Dock = DockStyle.Fill,
+                ColumnCount = 3,
+                RowHeadersVisible = false,
+                CellBorderStyle = DataGridViewCellBorderStyle.None,
+                SelectionMode = DataGridViewSelectionMode.FullRowSelect,
+                Font = new Font("Arial", 8),
+                BackgroundColor = SystemColors.Control,
+                AllowUserToAddRows = false,
+                MultiSelect = false,
+                AllowUserToResizeRows = false,
+                AllowUserToDeleteRows = false,
+                ReadOnly = true,
+            };
+            dataCart.Columns[0].Name = "Game";
+            dataCart.Columns[1].Name = "Amount";
+            dataCart.Columns[2].Name = "Price";
+
+
+            //Copy values of dataGridCart to a new dataGridView for receipt
+            foreach (DataGridViewCell cell in dataGridCart.Rows[0].Cells)
+                dataCart.Columns.Add(new DataGridViewColumn(cell));
+
+            dataCart.Rows.Add(dataGridCart.Rows.Count);
+
+            for (int row = 0; row < dataGridCart.Rows.Count; row++)
+            {
+                for (int col = 0; col < dataGridCart.Columns.Count; col++)
+                {
+                    dataCart[col, row].Value = dataGridCart[col, row].Value;
+                }
+            }
+            #endregion
+
+
+            receipt.Show();
+            receipt.Controls.Add(dataCart);
+
+            receipt.Closed += Receipt_Closed;
+        }
+
+        private void Receipt_Closed(object sender, EventArgs e)
+        {
+
+            string x = "";
+            File.WriteAllText(@"C:\Windows\Temp\shop.txt", x);
+            customer = new Customer();
+            customer.Discount = 1;
+            discountTextBox.BackColor = SystemColors.Control;
+            discountTextBox.Text = "Discount Code";
+
+            UpdateCart();
         }
 
         private void CreateBackgroundImage(Panel x)
