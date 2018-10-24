@@ -318,12 +318,19 @@ namespace shopProject
             {
                 if (MessageBox.Show("Are You sure You want to complete the checkout? ?", "Confirm buy", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
-                    string total = "";
-                    foreach (KeyValuePair<string, int> game in customer.Cart)
-                    {
-                        total += game.Key + ": " + game.Value + "\n";
-                    }
 
+                    string total = "";
+                    //foreach (KeyValuePair<string, int> game in customer.Cart)
+                    //{
+                    //    total += game.Key + ": " + game.Value + "\n";
+                    //}
+                    foreach (DataGridViewRow row in dataGridCart.Rows)
+                    {                        
+                        total += "Product: "+row.Cells[0].Value.ToString() + '\t';
+                        total += "#"+row.Cells[1].Value.ToString() + '\t';
+                        total += "$" + row.Cells[2].Value.ToString() + '\n';
+                        
+                    }
                     MessageBox.Show("*****Your receipt:*****\n" + total + "\nTotal number of products: " + customer.TotalNrOfProduct + "\nTotal cost: $" + customer.TotalPrise * customer.Discount, "Receipt");
                     string x = "";
                     File.WriteAllText(@"C:\Windows\Temp\shop.txt", x);
