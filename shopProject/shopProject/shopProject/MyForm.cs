@@ -32,6 +32,8 @@ namespace shopProject
         TextBox discountTextBox;
         Label TotalPriceLabel;
 
+        Form receipt;
+
         string[] nonformated;
         List<Product> products;
         public MyForm()
@@ -320,7 +322,7 @@ namespace shopProject
             if (dataGridCart.Rows.Count > 0)
             {
                 if (MessageBox.Show("Are You sure You want to complete the checkout? ?", "Confirm buy", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                {                    
+                {
                     CreateReceipt();
 
                 }
@@ -370,25 +372,46 @@ namespace shopProject
 
         private void CreateReceipt()
         {
-            Form receipt = new Form
-            {
-                Size = new Size(300, 300),
-                Font = new Font("Arial", 14),
-            };
+            #region reciptMaker
 
+            receipt = new Form
+            {
+                Size = new Size(350, 500),
+                Font = new Font("Arial", 14),
+                FormBorderStyle = FormBorderStyle.FixedDialog,
+            };
             TableLayoutPanel receiptContainer = new TableLayoutPanel
             {
                 Dock = DockStyle.Fill,
                 BackColor = SystemColors.Control,
-                RowCount = 2
+                RowCount = 4
+            };
+            Label receiptLabel = new Label
+            {
+                Dock = DockStyle.Fill,
+                Text = "-- Receipt --",
+                TextAlign = ContentAlignment.MiddleCenter,
+                Font = new Font("Arial", 16),
+                AutoSize = true,
+            };
+            Label totalPriceLabelReceipt = new Label
+            {
+                Dock = DockStyle.Fill,
+                TextAlign = ContentAlignment.MiddleCenter,
+                AutoSize = true,
+                Text = "Total Price: " + customer.TotalPrise * customer.Discount,
             };
             
+            Button closeReceipt = new Button
+            {
+                Dock = DockStyle.Fill,
+                TextAlign = ContentAlignment.MiddleCenter,
+                Text = "Close Receipt",
+            };
 
-            #region reciptMaker
             DataGridView dataCart = new DataGridView
             {
                 Dock = DockStyle.Fill,
-                ColumnCount = 3,
                 RowHeadersVisible = false,
                 CellBorderStyle = DataGridViewCellBorderStyle.None,
                 SelectionMode = DataGridViewSelectionMode.FullRowSelect,
@@ -396,13 +419,11 @@ namespace shopProject
                 BackgroundColor = SystemColors.Control,
                 AllowUserToAddRows = false,
                 MultiSelect = false,
+                Enabled = false,
                 AllowUserToResizeRows = false,
                 AllowUserToDeleteRows = false,
                 ReadOnly = true,
             };
-            dataCart.Columns[0].Name = "Game";
-            dataCart.Columns[1].Name = "Amount";
-            dataCart.Columns[2].Name = "Price";
 
 
             //Copy values of dataGridCart to a new dataGridView for receipt
@@ -418,13 +439,29 @@ namespace shopProject
                     dataCart[col, row].Value = dataGridCart[col, row].Value;
                 }
             }
+            NameDataGridCart(dataCart);
+            //dataCart.Columns[0].Name = "Game";
+            //dataCart.Columns[1].Name = "Amount";
+            //dataCart.Columns[2].Name = "Price";
+
+            receiptContainer.RowStyles.Add(new RowStyle(SizeType.Percent, 10));
+            receiptContainer.RowStyles.Add(new RowStyle(SizeType.Percent, 60));
+            receiptContainer.RowStyles.Add(new RowStyle(SizeType.Percent, 15));
+            receiptContainer.RowStyles.Add(new RowStyle(SizeType.Percent, 15));
+
             #endregion
 
 
             receipt.Show();
-            receipt.Controls.Add(dataCart);
+            receipt.Controls.Add(receiptContainer);
+            receiptContainer.Controls.Add(receiptLabel);
+            receiptContainer.Controls.Add(dataCart);
+            receiptContainer.Controls.Add(totalPriceLabelReceipt);
+            receiptContainer.Controls.Add(closeReceipt);
 
-            receipt.Closed += Receipt_Closed;
+
+            closeReceipt.Click += Receipt_Closed;
+            
         }
 
         private void Receipt_Closed(object sender, EventArgs e)
@@ -438,6 +475,7 @@ namespace shopProject
             discountTextBox.Text = "Discount Code";
 
             UpdateCart();
+            receipt.Close();
         }
 
         private void CreateBackgroundImage(Panel x)
@@ -524,7 +562,7 @@ namespace shopProject
                     if (products[i].Name == x.Key)
                     {
                         z = products[i].Price;
-                        found = true;                        
+                        found = true;
                     }
                 }
                 dataGridCart.Rows.Add(x.Key, x.Value, x.Value * z);
