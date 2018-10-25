@@ -264,8 +264,8 @@ namespace shopProject
 
             for (int i = 0; i < 3; i++)
             {
-            buttonHandlerPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 33));
-            buttonHandlerPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33));
+                buttonHandlerPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 33));
+                buttonHandlerPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33));
             }
             //buttonHandlerPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 33));
             //buttonHandlerPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 33));
@@ -466,13 +466,14 @@ namespace shopProject
             foreach (KeyValuePair<string, int> x in customer.Cart)
             {
                 int z = 0;
-                for (int i = 0; i < products.Count; i++)
+                bool found = false;
+                for (int i = 0; i < products.Count || !found; i++)
                 {
                     // Lägger till rätt pris i datagridview(cart).
                     if (products[i].Name == x.Key)
                     {
                         z = products[i].Price;
-                        break;
+                        found = true;                        
                     }
                 }
                 dataGridCart.Rows.Add(x.Key, x.Value, x.Value * z);
@@ -517,7 +518,6 @@ namespace shopProject
                     UpdateCart();
                     UpdateData(dataGridCart);
                     break;
-
                 }
             }
         }
