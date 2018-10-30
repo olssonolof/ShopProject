@@ -38,6 +38,7 @@ namespace shopProject
         List<Product> products;
         public MyForm()
         {
+        
             Icon = new Icon(@"shoppics\Mario.ico");
             #region UIControls
             nonformated = GetData();
@@ -51,6 +52,7 @@ namespace shopProject
             Text = "Game Shop";
             Size = new Size(1200, 800);
             Font = new Font("Arial", 10);
+            StartPosition = FormStartPosition.CenterScreen;
 
 
             container = new TableLayoutPanel
@@ -211,7 +213,7 @@ namespace shopProject
             TotalPriceLabel = new Label
             {
                 AutoSize = true,
-                Text = "Total Price: " + customer.TotalPrise * customer.Discount,
+                Text = "Total Price: $" + customer.TotalPrise * customer.Discount,
             };
 
             #endregion  //GUI
@@ -269,10 +271,7 @@ namespace shopProject
                 buttonHandlerPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 33));
                 buttonHandlerPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33));
             }
-            //buttonHandlerPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 33));
-            //buttonHandlerPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 33));
-            //buttonHandlerPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33));
-            //buttonHandlerPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33));
+
 
             container.RowStyles.Add(new RowStyle(SizeType.Percent, 15));
             container.RowStyles.Add(new RowStyle(SizeType.Percent, 70));
@@ -376,9 +375,12 @@ namespace shopProject
 
             receipt = new Form
             {
-                Size = new Size(350, 500),
-                Font = new Font("Arial", 14),
+                Size = new Size(350, 600),
+                Font = new Font("Arial", 10),
                 FormBorderStyle = FormBorderStyle.FixedDialog,
+                MaximizeBox = false,
+                MinimizeBox = false,
+                StartPosition = FormStartPosition.CenterScreen,
             };
             TableLayoutPanel receiptContainer = new TableLayoutPanel
             {
@@ -397,11 +399,18 @@ namespace shopProject
             Label totalPriceLabelReceipt = new Label
             {
                 Dock = DockStyle.Fill,
-                TextAlign = ContentAlignment.MiddleCenter,
-                AutoSize = true,
-                Text = "Total Price: " + customer.TotalPrise * customer.Discount,
+                TextAlign = ContentAlignment.BottomCenter,
+                AutoSize = true,               
+                Text = TotalPriceLabel.Text,
             };
-            
+            Label discountLabelReceipt = new Label
+            {
+                Dock = DockStyle.Fill,
+                TextAlign = ContentAlignment.TopCenter,
+                AutoSize = true,
+                Text = $"Total discount: ${Math.Round(customer.TotalPrise - (customer.TotalPrise * customer.Discount), 2)}",
+            };
+
             Button closeReceipt = new Button
             {
                 Dock = DockStyle.Fill,
@@ -453,29 +462,35 @@ namespace shopProject
 
 
             receipt.Show();
+            this.Enabled = false;
             receipt.Controls.Add(receiptContainer);
-            receiptContainer.Controls.Add(receiptLabel);
-            receiptContainer.Controls.Add(dataCart);
-            receiptContainer.Controls.Add(totalPriceLabelReceipt);
-            receiptContainer.Controls.Add(closeReceipt);
-
-
-            closeReceipt.Click += Receipt_Closed;
+            receiptContainer.Controls.Add(receiptLabel, 0, 0);
+            receiptContainer.Controls.Add(dataCart, 0, 1);
+            receiptContainer.Controls.Add(discountLabelReceipt, 0,2);
+            receiptContainer.Controls.Add(totalPriceLabelReceipt, 0, 2);
+            receiptContainer.Controls.Add(closeReceipt, 0, 3);
             
+
+            closeReceipt.Click += Receipt_ClosedX;
+            receipt.FormClosed += Receipt_Closed;
+
         }
 
         private void Receipt_Closed(object sender, EventArgs e)
         {
-
+            this.Enabled = true;
             string x = "";
             File.WriteAllText(@"C:\Windows\Temp\shop.txt", x);
             customer = new Customer();
             customer.Discount = 1;
             discountTextBox.BackColor = SystemColors.Control;
             discountTextBox.Text = "Discount Code";
-
+            TotalPrice();
             UpdateCart();
-            receipt.Close();
+        }
+        private void Receipt_ClosedX(object sender, EventArgs e)
+        {
+            receipt.Close();           
         }
 
         private void CreateBackgroundImage(Panel x)
@@ -612,7 +627,7 @@ namespace shopProject
         }
         public void TotalPrice()
         {
-            TotalPriceLabel.Text = "Total Price: " + (customer.TotalPrise * customer.Discount);
+            TotalPriceLabel.Text = "Total Price: $" + (customer.TotalPrise * customer.Discount);
         }
 
     }

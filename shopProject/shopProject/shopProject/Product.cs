@@ -9,13 +9,13 @@ using System.Drawing;
 
 namespace shopProject
 {
-    class Product
+    public class Product
     {
-        public string Name;
-        public int Year;
-        public int Price;
-        public Image Pic;
-        public string Summary;
+        public string Name { get; set; }
+        public int Year { get; set; }
+        public int Price { get; set; }
+        public Image Pic { get; set; }
+        public string Summary { get; set; }
 
         public Product(string formated)
         {
@@ -39,17 +39,28 @@ namespace shopProject
             }
         }
     }
-    class Customer
+    public class Customer
     {
         public Dictionary<String, int> Cart = new Dictionary<String, int> { };
-        public int TotalPrise;
-        public int TotalNrOfProduct;
-        public Double Discount = 1;
-
-
-        public Customer()
+        public int TotalPrise { get; set; }
+        public int TotalNrOfProduct { get; set; }
+        private double discount = 1;
+        public Double Discount
         {
-            ReadSaveCart();
+            get
+            {
+                return discount;
+            }
+            set
+            {
+                discount = value;
+            }
+        }
+
+
+        public Customer(string path = @"C:\Windows\Temp\shop.txt")
+        {
+            ReadSaveCart(path);
         }
 
         public void AddProductToCart(Product product)
@@ -71,11 +82,11 @@ namespace shopProject
             TotalNrOfProduct = Cart.Values.Sum(x => x);
         }
 
-        public void ReadSaveCart()
+        public void ReadSaveCart(string path)
         {
             try
             {
-                string[] nonFormated = File.ReadAllLines(@"C:\Windows\Temp\shop.txt");
+                string[] nonFormated = File.ReadAllLines(path);
 
                 foreach (var item in nonFormated)
                 {
@@ -109,7 +120,7 @@ namespace shopProject
             foreach (string item in discount)
             {
                 string[] formated = item.Split(',');
-                if ((text2.Contains(formated[0]) && Discount == 1) || (text2.Contains(formated[0]) && (100-Double.Parse(formated[1])) < Discount * 100))
+                if ((text2.Contains(formated[0]) && Discount == 1) || (text2.Contains(formated[0]) && (100 - Double.Parse(formated[1])) < Discount * 100))
                 {
                     Discount = 1 - (double.Parse(formated[1]) / 100);
                     MessageBox.Show("You have " + (100 - (Discount * 100)) + "% discount!");
