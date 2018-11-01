@@ -44,5 +44,31 @@ namespace ReadSavedCartTest
             // Assert
             Assert.AreEqual(customer.Cart.Count, 3);
         }
+        [TestMethod]
+        public void ReadValidDiscount()
+        {
+            // ArrangeRa
+            Customer customer = new Customer("1234.txt");
+
+            // Act
+           
+
+            // Assert
+            Assert.AreEqual(customer.ReadDiscount("nintendo"), true);
+            Assert.AreEqual(customer.Discount, 0, 85);
+        }
+        public void ReadNonValidDiscount()
+        {
+            // ArrangeRa
+            Customer customer = new Customer("1234.txt");
+
+            // Act
+
+
+            // Assert
+            Assert.AreEqual(customer.ReadDiscount("xxx"), false);
+            Assert.AreEqual(customer.Discount, 1);
+        }
+
     }
 }
