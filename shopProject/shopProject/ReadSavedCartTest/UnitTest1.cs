@@ -55,7 +55,7 @@ namespace ReadSavedCartTest
 
             // Assert
             Assert.AreEqual(customer.ReadDiscount("nintendo"), true);
-            Assert.AreEqual(customer.Discount, 0, 85);
+            Assert.AreEqual(customer.Discount, 0, 0.85);
         }
         public void ReadNonValidDiscount()
         {

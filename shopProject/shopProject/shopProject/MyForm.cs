@@ -567,20 +567,20 @@ namespace shopProject
         {
             dataGridCart.Rows.Clear();
 
-            foreach (KeyValuePair<string, int> x in customer.Cart)
+            foreach (KeyValuePair<string, int> row in customer.Cart)
             {
-                int z = 0;
+                int price = 0;
                 bool found = false;
                 for (int i = 0; i < products.Count || !found; i++)
                 {
                     // Lägger till rätt pris i datagridview(cart).
-                    if (products[i].Name == x.Key)
+                    if (products[i].Name == row.Key)
                     {
-                        z = products[i].Price;
+                        price = products[i].Price;
                         found = true;
                     }
                 }
-                dataGridCart.Rows.Add(x.Key, x.Value, x.Value * z);
+                dataGridCart.Rows.Add(row.Key, row.Value, row.Value * price);
                 customer.CountTotalAmount();
 
             }
