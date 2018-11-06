@@ -217,7 +217,7 @@ namespace shopProject
             TotalPriceLabel = new Label
             {
                 AutoSize = true,
-                Text = "Total Price: $" + customer.TotalPrise * customer.Discount,
+                Text = "Total Price: $" + customer.TotalPrice * customer.Discount,
             };
 
             #endregion  //GUI
@@ -435,7 +435,7 @@ namespace shopProject
                 Dock = DockStyle.Fill,
                 TextAlign = ContentAlignment.TopCenter,
                 AutoSize = true,
-                Text = $"Total discount: ${Math.Round(customer.TotalPrise - (customer.TotalPrise * customer.Discount), 2)}",
+                Text = $"Total discount: ${Math.Round(customer.TotalPrice - (customer.TotalPrice * customer.Discount), 2)}",
             };
 
             Button closeReceipt = new Button
@@ -647,7 +647,7 @@ namespace shopProject
         }
         public void TotalPrice()
         {
-            TotalPriceLabel.Text = $"Total Price: ${customer.TotalPrise * customer.Discount}";
+            TotalPriceLabel.Text = $"Total Price: ${customer.TotalPrice * customer.Discount}";
         }
 
     }
