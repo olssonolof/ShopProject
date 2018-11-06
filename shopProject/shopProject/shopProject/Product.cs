@@ -107,10 +107,10 @@ namespace shopProject
         {
             if (cartGrid.RowCount > 0)
             {
-                string x = cartGrid.CurrentRow.Cells[0].Value.ToString();
-                int y = int.Parse(cartGrid.CurrentRow.Cells[2].Value.ToString());
-                Cart.Remove(x);
-                TotalPrise -= y;
+                string nameOfProduct = cartGrid.CurrentRow.Cells[0].Value.ToString();
+                int priceOfProduct = int.Parse(cartGrid.CurrentRow.Cells[2].Value.ToString());
+                Cart.Remove(nameOfProduct);
+                TotalPrise -= priceOfProduct;
                 CountTotalAmount();
             }
         }

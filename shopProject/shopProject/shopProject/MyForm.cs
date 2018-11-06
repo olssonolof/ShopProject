@@ -93,7 +93,7 @@ namespace shopProject
             };
 
             data1.Columns[0].FillWeight = 180;
-            NameDataGrid(data1);
+            NameDataGrid();
             data1.SelectionChanged += ChangedSelektion;
 
             infoContainer = new Panel
@@ -101,7 +101,7 @@ namespace shopProject
                 Dock = DockStyle.Fill,
                 BackColor = SystemColors.Control,
             };
-            AddData(data1);
+            AddData();
 
             dataGridCart = new DataGridView
             {
@@ -534,14 +534,15 @@ namespace shopProject
             TotalPrice();
         }
 
-        static void NameDataGrid(DataGridView data)
+        public void NameDataGrid()
         {
-            data.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            data.Columns[0].Name = "Game";
-            data.Columns[1].Name = "Release year";
-            data.Columns[2].Name = "Price";
+            data1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            data1.Columns[0].Name = "Game";
+            data1.Columns[1].Name = "Release year";
+            data1.Columns[2].Name = "Price";
         }
 
+        // Both Cart and Receipe uses this method
         static void NameDataGridCart(DataGridView data)
         {
             data.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
@@ -551,7 +552,7 @@ namespace shopProject
         }
 
 
-        public void AddData(DataGridView data)
+        public void AddData()
         {
             foreach (Product x in products)
             {
@@ -605,11 +606,6 @@ namespace shopProject
                 string x = "";
                 File.WriteAllText(@"C:\Windows\Temp\shop.txt", x);
             }
-        }
-
-        public void GetImages()
-        {
-            string x = data1.CurrentRow.Cells[0].Value.ToString();
         }
 
         public void BuyProduct()
