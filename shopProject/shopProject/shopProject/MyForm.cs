@@ -26,11 +26,13 @@ namespace shopProject
         Button buy;
         Button clearCart;
         Button checkout;
+        Panel secretPanel;
         Label productInfo = new Label();
         PictureBox gradient;
         Customer customer;
         TextBox discountTextBox;
         Label TotalPriceLabel;
+        
 
         Form receipt;
 
@@ -167,6 +169,13 @@ namespace shopProject
                 Text = "Clear Cart",
             };
 
+            secretPanel = new Panel
+            {
+                Size = new Size(10, 10),
+                BackgroundImageLayout = ImageLayout.Zoom,
+
+
+            };
             checkout = new Button
             {
                 Dock = DockStyle.Fill,
@@ -249,7 +258,11 @@ namespace shopProject
             infoContainerTable.Controls.Add(buttonHandlerPanel, 1, 2);
             buttonHandlerPanel.Controls.Add(buy, 1, 0);
             buttonHandlerPanel.Controls.Add(remove, 1, 1);
+            buttonHandlerPanel.Controls.Add(secretPanel, 0, 0);
             buttonHandlerPanel.Controls.Add(clearCart, 1, 2);
+
+            buttonHandlerPanel.SetRowSpan(secretPanel, 100);
+
 
 
 
@@ -281,6 +294,8 @@ namespace shopProject
 
             remove.MouseEnter += MouseOverButton;
             buy.MouseEnter += MouseOverButton;
+            secretPanel.MouseEnter += MouseOverButton;
+            secretPanel.MouseLeave += SecretPanel_MouseLeave;
             clearCart.MouseEnter += MouseOverButton;
             checkout.MouseEnter += MouseOverButton;
             remove.Click += Remove_Clicked;
@@ -300,6 +315,13 @@ namespace shopProject
 
             UpdateCart();
 
+        }
+
+        private void SecretPanel_MouseLeave(object sender, EventArgs e)
+        {
+            secretPanel.BackgroundImage = null;
+            secretPanel.Dock = DockStyle.None;
+            secretPanel.Size = new Size(10, 10);
         }
 
         private void DiscountTextBox_TextChanged(object sender, EventArgs e)
@@ -365,6 +387,14 @@ namespace shopProject
             else if (sender == remove) tp.SetToolTip(remove, "Click here to remove product from cart");
             else if (sender == clearCart) tp.SetToolTip(clearCart, "Click here to clear the cart");
             else if (sender == checkout) tp.SetToolTip(checkout, "Click here to checkout");
+            else if (sender == secretPanel)
+            {
+
+                tp.SetToolTip(secretPanel, "Meow!");
+                secretPanel.BackgroundImage = Image.FromFile(@"shoppics\catPic.jpg");
+                secretPanel.Dock = DockStyle.Fill;
+                
+            }
         }
 
         private void CreateReceipt()
