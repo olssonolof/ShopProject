@@ -41,7 +41,7 @@ namespace shopProject
         
             Icon = new Icon(@"shoppics\Mario.ico");
             #region UIControls
-            nonformated = GetData();
+            nonformated = File.ReadAllLines("products.csv");
             customer = new Customer();
             products = new List<Product> { };
             foreach (string s in nonformated)
@@ -545,11 +545,7 @@ namespace shopProject
             data.Columns[2].Name = "Price";
         }
 
-        static string[] GetData()
-        {
-            return File.ReadAllLines("products.csv");
-        }
-
+    
         public void AddData(DataGridView data)
         {
             foreach (Product x in products)
