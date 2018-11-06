@@ -39,6 +39,7 @@ namespace shopProject
             }
         }
     }
+
     public class Customer
     {
         public Dictionary<String, int> Cart = new Dictionary<String, int> { };
@@ -77,6 +78,7 @@ namespace shopProject
 
 
         }
+
         public void CountTotalAmount()
         {
             TotalNrOfProduct = Cart.Values.Sum(x => x);
@@ -102,6 +104,7 @@ namespace shopProject
                 File.WriteAllText(@"C:\Windows\Temp\shop.txt", x);
             }
         }
+
         public void RemoveFromCart(DataGridView cartGrid)
         {
             if (cartGrid.RowCount > 0)
@@ -113,6 +116,7 @@ namespace shopProject
                 CountTotalAmount();
             }
         }
+
         public bool ReadDiscount(string text)
         {
             string text2 = text.ToUpper();
