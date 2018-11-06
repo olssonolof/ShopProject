@@ -299,6 +299,7 @@ namespace shopProject
 
 
             UpdateCart();
+
         }
 
         private void DiscountTextBox_TextChanged(object sender, EventArgs e)
@@ -323,14 +324,12 @@ namespace shopProject
                 if (MessageBox.Show("Are You sure You want to complete the checkout? ?", "Confirm buy", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     CreateReceipt();
-
                 }
             }
         }
 
         private void Data1_KeyUp(object sender, KeyEventArgs e)
         {
-
             if (e.KeyCode == Keys.Enter) BuyProduct();
         }
 
@@ -342,11 +341,10 @@ namespace shopProject
                 {
                     string x = "";
                     File.WriteAllText(@"C:\Windows\Temp\shop.txt", x);
-
                 }
             }
-
         }
+
         private void ClearCartPressed(object sender, EventArgs e)
         {
             string x = "";
@@ -382,12 +380,14 @@ namespace shopProject
                 MinimizeBox = false,
                 StartPosition = FormStartPosition.CenterScreen,
             };
+
             TableLayoutPanel receiptContainer = new TableLayoutPanel
             {
                 Dock = DockStyle.Fill,
                 BackColor = SystemColors.Control,
                 RowCount = 4
             };
+
             Label receiptLabel = new Label
             {
                 Dock = DockStyle.Fill,
@@ -396,6 +396,7 @@ namespace shopProject
                 Font = new Font("Arial", 16),
                 AutoSize = true,
             };
+
             Label totalPriceLabelReceipt = new Label
             {
                 Dock = DockStyle.Fill,
@@ -403,6 +404,7 @@ namespace shopProject
                 AutoSize = true,               
                 Text = TotalPriceLabel.Text,
             };
+
             Label discountLabelReceipt = new Label
             {
                 Dock = DockStyle.Fill,
@@ -488,6 +490,7 @@ namespace shopProject
             TotalPrice();
             UpdateCart();
         }
+
         private void Receipt_ClosedX(object sender, EventArgs e)
         {
             receipt.Close();           
@@ -515,7 +518,6 @@ namespace shopProject
                     productInfo.Text = item.Summary;
                 }
             }
-
         }
 
         private void Remove_Clicked(object sender, EventArgs e)
@@ -524,7 +526,6 @@ namespace shopProject
             dataGridCart.Rows.Clear();
             UpdateCart();
             TotalPrice();
-
         }
 
         static void NameDataGrid(DataGridView data)
@@ -535,6 +536,7 @@ namespace shopProject
             data.Columns[2].Name = "Price";
 
         }
+
         static void NameDataGridCart(DataGridView data)
         {
             data.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
@@ -545,9 +547,9 @@ namespace shopProject
 
         static string[] GetData()
         {
-
             return File.ReadAllLines("products.csv");
         }
+
         public void AddData(DataGridView data)
         {
             foreach (Product x in products)
@@ -556,11 +558,9 @@ namespace shopProject
             }
         }
 
-
         public void BuyClicked(object sender, EventArgs e)
         {
             BuyProduct();
-
         }
 
         public void UpdateCart()
@@ -608,7 +608,6 @@ namespace shopProject
         public void GetImages()
         {
             string x = data1.CurrentRow.Cells[0].Value.ToString();
-
         }
 
         public void BuyProduct()
