@@ -384,11 +384,9 @@ namespace shopProject
             else if (sender == checkout) tp.SetToolTip(checkout, "Click here to checkout");
             else if (sender == secretPanel)
             {
-
                 tp.SetToolTip(secretPanel, "Meow!");
                 secretPanel.BackgroundImage = Image.FromFile(@"shoppics\catPic.jpg");
-                secretPanel.Dock = DockStyle.Fill;
-                
+                secretPanel.Dock = DockStyle.Fill;                
             }
         }
 
