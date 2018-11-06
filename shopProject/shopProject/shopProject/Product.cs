@@ -58,7 +58,7 @@ namespace shopProject
             }
         }
 
-
+        // Different path only used for testing 
         public Customer(string path = @"C:\Windows\Temp\shop.txt")
         {
             ReadSaveCart(path);
@@ -75,8 +75,6 @@ namespace shopProject
                 Cart.Add(product.Name, 1);
             }
             TotalPrise += product.Price;
-
-
         }
 
         public void CountTotalAmount()

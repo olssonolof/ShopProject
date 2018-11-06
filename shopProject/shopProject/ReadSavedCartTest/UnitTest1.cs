@@ -47,7 +47,7 @@ namespace ReadSavedCartTest
         [TestMethod]
         public void ReadValidDiscount()
         {
-            // ArrangeRa
+            // Arrange
             Customer customer = new Customer("1234.txt");
 
             // Act
@@ -59,7 +59,7 @@ namespace ReadSavedCartTest
         }
         public void ReadNonValidDiscount()
         {
-            // ArrangeRa
+            // Arrange
             Customer customer = new Customer("1234.txt");
 
             // Act

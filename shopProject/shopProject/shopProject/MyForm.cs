@@ -12,25 +12,25 @@ namespace shopProject
 {
     class MyForm : Form
     {
-        TableLayoutPanel container;
-        DataGridView data1;
-        Panel infoContainer;
-        Panel header;
-        Panel footer;
-        DataGridView dataGridCart;
-        TableLayoutPanel infoContainerTable;
-        PictureBox productPicture;
-        Button remove;
-        Button buy;
-        Button clearCart;
-        Button checkout;
-        Panel secretPanel;
-        Label productInfo;
-        PictureBox gradient;
-        Customer customer;
-        TextBox discountTextBox;
-        Label TotalPriceLabel;
-        Form receipt;
+        private TableLayoutPanel container;
+        private DataGridView data1;
+        private Panel infoContainer;
+        private Panel header;
+        private Panel footer;
+        private DataGridView dataGridCart;
+        private TableLayoutPanel infoContainerTable;
+        private PictureBox productPicture;
+        private Button remove;
+        private Button buy;
+        private Button clearCart;
+        private Button checkout;
+        private Panel secretPanel;
+        private Label productInfo;
+        private PictureBox gradient;
+        private Customer customer;
+        private TextBox discountTextBox;
+        private  Label TotalPriceLabel;
+        private Form receipt;
 
         string[] nonformated;
         List<Product> products;
