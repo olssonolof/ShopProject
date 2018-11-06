@@ -37,8 +37,7 @@ namespace shopProject
         string[] nonformated;
         List<Product> products;
         public MyForm()
-        {
-        
+        {        
             Icon = new Icon(@"shoppics\Mario.ico");
             #region UIControls
             nonformated = File.ReadAllLines("products.csv");
@@ -71,7 +70,6 @@ namespace shopProject
             Panel xz = header;
             CreateBackgroundImage(xz);
 
-
             footer = new Panel
             {
                 BackColor = Color.Gray,
@@ -95,6 +93,7 @@ namespace shopProject
                 AllowUserToDeleteRows = false,
                 ReadOnly = true,
             };
+
             data1.Columns[0].FillWeight = 180;
             NameDataGrid(data1);
             data1.SelectionChanged += ChangedSelektion;
@@ -103,7 +102,6 @@ namespace shopProject
             {
                 Dock = DockStyle.Fill,
                 BackColor = SystemColors.Control,
-
             };
             AddData(data1);
 
@@ -132,8 +130,6 @@ namespace shopProject
                 Dock = DockStyle.Fill
             };
 
-
-
             TableLayoutPanel buttonHandlerPanel = new TableLayoutPanel
             {
                 RowCount = 3,
@@ -141,7 +137,6 @@ namespace shopProject
                 ColumnCount = 3,
 
             };
-
 
             buy = new Button
             {
@@ -622,7 +617,7 @@ namespace shopProject
         }
         public void TotalPrice()
         {
-            TotalPriceLabel.Text = "Total Price: $" + (customer.TotalPrise * customer.Discount);
+            TotalPriceLabel.Text = $"Total Price: ${customer.TotalPrise * customer.Discount}";
         }
 
     }
