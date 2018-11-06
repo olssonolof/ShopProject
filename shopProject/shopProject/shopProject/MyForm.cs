@@ -21,13 +21,13 @@ namespace shopProject
         Panel footer;
         DataGridView dataGridCart;
         TableLayoutPanel infoContainerTable;
-        PictureBox productPicture = new PictureBox();
+        PictureBox productPicture;
         Button remove;
         Button buy;
         Button clearCart;
         Button checkout;
         Panel secretPanel;
-        Label productInfo = new Label();
+        Label productInfo;
         PictureBox gradient;
         Customer customer;
         TextBox discountTextBox;
@@ -364,9 +364,15 @@ namespace shopProject
 
         private void ClearCartPressed(object sender, EventArgs e)
         {
+            double discount = 1;
             string x = "";
+            if (customer.Discount != discount)
+            {
+                discount = customer.Discount;
+            }
             File.WriteAllText(@"C:\Windows\Temp\shop.txt", x);
             customer = new Customer();
+            customer.Discount = discount;
             UpdateCart();
             TotalPrice();
         }
@@ -508,7 +514,7 @@ namespace shopProject
             File.WriteAllText(@"C:\Windows\Temp\shop.txt", x);
             customer = new Customer();
             customer.Discount = 1;
-            discountTextBox.BackColor = SystemColors.Control;
+            discountTextBox.BackColor = Color.White;
             discountTextBox.Text = "Discount Code";
             TotalPrice();
             UpdateCart();
