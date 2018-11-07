@@ -43,7 +43,7 @@ namespace shopProject
     public class Customer
     {
         public Dictionary<String, int> Cart = new Dictionary<String, int> { };
-        public int TotalPrise { get; set; }
+        public int TotalPrice { get; set; }
         public int TotalNrOfProduct { get; set; }
         private double discount = 1;
         public Double Discount
@@ -93,7 +93,7 @@ namespace shopProject
                     string[] formated = item.Split(',');
                     Cart.Add(formated[0], int.Parse(formated[1]));
                     TotalNrOfProduct += int.Parse(formated[1]);
-                    TotalPrise += int.Parse(formated[2]);
+                    TotalPrice += int.Parse(formated[2]);
                 }
             }
             catch
