@@ -12,34 +12,29 @@ namespace shopProject
 {
     class MyForm : Form
     {
-
-
-        TableLayoutPanel container;
-        DataGridView data1;
-        Panel infoContainer;
-        Panel header;
-        Panel footer;
-        DataGridView dataGridCart;
-        TableLayoutPanel infoContainerTable;
-        PictureBox productPicture;
-        Button remove;
-        Button buy;
-        Button clearCart;
-        Button checkout;
-        Panel secretPanel;
-        Label productInfo;
-        PictureBox gradient;
-        Customer customer;
-        TextBox discountTextBox;
-        Label TotalPriceLabel;
-        
-
-        Form receipt;
+        private TableLayoutPanel container;
+        private DataGridView data1;
+        private Panel infoContainer;
+        private Panel header;
+        private Panel footer;
+        private DataGridView dataGridCart;
+        private TableLayoutPanel infoContainerTable;
+        private PictureBox productPicture;
+        private Button remove;
+        private Button buy;
+        private Button clearCart;
+        private Button checkout;
+        private Panel secretPanel;
+        private Label productInfo;
+        private Customer customer;
+        private TextBox discountTextBox;
+        private Label TotalPriceLabel;
+        private Form receipt;
 
         string[] nonformated;
         List<Product> products;
         public MyForm()
-        {        
+        {
             Icon = new Icon(@"shoppics\Mario.ico");
             #region UIControls
             nonformated = File.ReadAllLines("products.csv");
@@ -55,7 +50,6 @@ namespace shopProject
             Font = new Font("Arial", 10);
             StartPosition = FormStartPosition.CenterScreen;
 
-
             container = new TableLayoutPanel
             {
                 RowCount = 3,
@@ -67,18 +61,19 @@ namespace shopProject
             header = new Panel
             {
                 Dock = DockStyle.Fill,
-                BackColor = Color.Gray
+                BackColor = Color.Gray,
+                BackgroundImage = Image.FromFile(@"shoppics\Background.jpg"),
+                BackgroundImageLayout = ImageLayout.Stretch,
             };
-            Panel xz = header;
-            CreateBackgroundImage(xz);
 
             footer = new Panel
             {
                 BackColor = Color.Gray,
                 Dock = DockStyle.Fill,
+                BackgroundImage = Image.FromFile(@"shoppics\Background.jpg"),
+                BackgroundImageLayout = ImageLayout.Stretch,
             };
-            Panel xy = footer;
-            CreateBackgroundImage(xy);
+
             data1 = new DataGridView
             {
                 ColumnCount = 3,
@@ -97,7 +92,7 @@ namespace shopProject
             };
 
             data1.Columns[0].FillWeight = 180;
-            NameDataGrid(data1);
+            NameDataGrid();
             data1.SelectionChanged += ChangedSelektion;
 
             infoContainer = new Panel
@@ -105,7 +100,7 @@ namespace shopProject
                 Dock = DockStyle.Fill,
                 BackColor = SystemColors.Control,
             };
-            AddData(data1);
+            AddData();
 
             dataGridCart = new DataGridView
             {
@@ -137,7 +132,6 @@ namespace shopProject
                 RowCount = 3,
                 Dock = DockStyle.Fill,
                 ColumnCount = 3,
-
             };
 
             buy = new Button
@@ -146,8 +140,8 @@ namespace shopProject
                 FlatStyle = FlatStyle.Flat,
                 Text = "Buy >>",
                 AutoSize = true,
-
             };
+
             remove = new Button
             {
                 Size = new Size(150, 15),
@@ -156,6 +150,7 @@ namespace shopProject
                 AutoSize = true,
                 Dock = DockStyle.Fill
             };
+
             clearCart = new Button
             {
                 Dock = DockStyle.Fill,
@@ -168,14 +163,12 @@ namespace shopProject
             {
                 Size = new Size(10, 10),
                 BackgroundImageLayout = ImageLayout.Zoom,
-
-
             };
+
             checkout = new Button
             {
                 Dock = DockStyle.Fill,
-                Text = "Checkout",
-
+                Text = "Checkout"
             };
 
             productPicture = new PictureBox
@@ -184,35 +177,36 @@ namespace shopProject
                 BackColor = SystemColors.Control,
                 Size = new Size(200, 150),
                 SizeMode = PictureBoxSizeMode.Zoom,
-
             };
+
             productInfo = new Label
             {
                 Text = "test!",
                 Dock = DockStyle.Fill,
                 Font = new Font("arial", 9),
-
             };
+
             Label HeaderInfo = new Label
             {
                 Dock = DockStyle.Bottom,
                 Font = new Font("Arial", 15),
                 Text = "Game information: ",
-
             };
+
             TableLayoutPanel cartPanel = new TableLayoutPanel
             {
                 RowCount = 3,
                 ColumnCount = 2,
                 Dock = DockStyle.Fill,
             };
+
             discountTextBox = new TextBox
             {
                 Dock = DockStyle.Fill,
                 BorderStyle = BorderStyle.FixedSingle,
                 Text = "Discount Code",
-
             };
+
             discountTextBox.Click += DiscountTextSelectAll_OnClick;
             TotalPriceLabel = new Label
             {
@@ -222,13 +216,11 @@ namespace shopProject
 
             #endregion  //GUI
 
-
             container.Controls.Add(header);
             container.Controls.Add(footer, 2, 2);
             container.Controls.Add(data1, 0, 1);
             container.Controls.Add(infoContainer, 1, 1);
             container.Controls.Add(cartPanel, 2, 1);
-
 
             cartPanel.Controls.Add(dataGridCart, 0, 0);
             cartPanel.Controls.Add(discountTextBox, 0, 1);
@@ -237,49 +229,35 @@ namespace shopProject
             cartPanel.SetColumnSpan(dataGridCart, 100);
             cartPanel.SetColumnSpan(checkout, 100);
 
-
             container.SetColumnSpan(header, 100);
             container.SetColumnSpan(footer, 100);
             infoContainerTable.SetColumnSpan(buttonHandlerPanel, 100);
-
-
             infoContainer.Controls.Add(infoContainerTable);
-
             infoContainerTable.Controls.Add(HeaderInfo, 1, 0);
-
             infoContainerTable.Controls.Add(productPicture, 0, 1);
             infoContainerTable.Controls.Add(productInfo, 1, 1);
-
             infoContainerTable.Controls.Add(buttonHandlerPanel, 1, 2);
             buttonHandlerPanel.Controls.Add(buy, 1, 0);
             buttonHandlerPanel.Controls.Add(remove, 1, 1);
             buttonHandlerPanel.Controls.Add(secretPanel, 0, 0);
             buttonHandlerPanel.Controls.Add(clearCart, 1, 2);
-
             buttonHandlerPanel.SetRowSpan(secretPanel, 100);
-
-
-
 
             infoContainerTable.RowStyles.Add(new RowStyle(SizeType.Percent, 12));
             infoContainerTable.RowStyles.Add(new RowStyle(SizeType.Percent, 56));
             infoContainerTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
             infoContainerTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
 
-
-
             cartPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 85));
             cartPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 7));
             cartPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
             cartPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
-
 
             for (int i = 0; i < 3; i++)
             {
                 buttonHandlerPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 33));
                 buttonHandlerPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33));
             }
-
 
             container.RowStyles.Add(new RowStyle(SizeType.Percent, 15));
             container.RowStyles.Add(new RowStyle(SizeType.Percent, 70));
@@ -303,13 +281,7 @@ namespace shopProject
             discountTextBox.TextChanged += DiscountTextBox_TextChanged;
             this.FormClosed += ClosedWindow;
 
-
-
-
-
-
             UpdateCart();
-
         }
 
         private void SecretPanel_MouseLeave(object sender, EventArgs e)
@@ -392,13 +364,13 @@ namespace shopProject
             {
                 tp.SetToolTip(secretPanel, "Meow!");
                 secretPanel.BackgroundImage = Image.FromFile(@"shoppics\catPic.jpg");
-                secretPanel.Dock = DockStyle.Fill;                
+                secretPanel.Dock = DockStyle.Fill;
             }
         }
 
+        #region reciptMaker
         private void CreateReceipt()
         {
-            #region reciptMaker
 
             receipt = new Form
             {
@@ -430,7 +402,7 @@ namespace shopProject
             {
                 Dock = DockStyle.Fill,
                 TextAlign = ContentAlignment.BottomCenter,
-                AutoSize = true,               
+                AutoSize = true,
                 Text = TotalPriceLabel.Text,
             };
 
@@ -480,16 +452,12 @@ namespace shopProject
                 }
             }
             NameDataGridCart(dataCart);
-            //dataCart.Columns[0].Name = "Game";
-            //dataCart.Columns[1].Name = "Amount";
-            //dataCart.Columns[2].Name = "Price";
 
             receiptContainer.RowStyles.Add(new RowStyle(SizeType.Percent, 10));
             receiptContainer.RowStyles.Add(new RowStyle(SizeType.Percent, 60));
             receiptContainer.RowStyles.Add(new RowStyle(SizeType.Percent, 15));
             receiptContainer.RowStyles.Add(new RowStyle(SizeType.Percent, 15));
 
-            #endregion
 
 
             receipt.Show();
@@ -497,14 +465,13 @@ namespace shopProject
             receipt.Controls.Add(receiptContainer);
             receiptContainer.Controls.Add(receiptLabel, 0, 0);
             receiptContainer.Controls.Add(dataCart, 0, 1);
-            receiptContainer.Controls.Add(discountLabelReceipt, 0,2);
+            receiptContainer.Controls.Add(discountLabelReceipt, 0, 2);
             receiptContainer.Controls.Add(totalPriceLabelReceipt, 0, 2);
             receiptContainer.Controls.Add(closeReceipt, 0, 3);
-            
+
 
             closeReceipt.Click += Receipt_ClosedX;
             receipt.FormClosed += Receipt_Closed;
-
         }
 
         private void Receipt_Closed(object sender, EventArgs e)
@@ -522,19 +489,9 @@ namespace shopProject
 
         private void Receipt_ClosedX(object sender, EventArgs e)
         {
-            receipt.Close();           
+            receipt.Close();
         }
-
-        private void CreateBackgroundImage(Panel x)
-        {
-            gradient = new PictureBox
-            {
-                Dock = DockStyle.Fill,
-                ImageLocation = "https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-507917.jpg",
-                SizeMode = PictureBoxSizeMode.StretchImage,
-            };
-            x.Controls.Add(gradient);
-        }
+        #endregion
 
         private void ChangedSelektion(object sender, EventArgs e)
         {
@@ -557,15 +514,15 @@ namespace shopProject
             TotalPrice();
         }
 
-        static void NameDataGrid(DataGridView data)
+        public void NameDataGrid()
         {
-            data.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            data.Columns[0].Name = "Game";
-            data.Columns[1].Name = "Release year";
-            data.Columns[2].Name = "Price";
-
+            data1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            data1.Columns[0].Name = "Game";
+            data1.Columns[1].Name = "Release year";
+            data1.Columns[2].Name = "Price";
         }
 
+        // Both Cart and Receipe uses this method
         static void NameDataGridCart(DataGridView data)
         {
             data.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
@@ -574,8 +531,8 @@ namespace shopProject
             data.Columns[2].Name = "Price";
         }
 
-    
-        public void AddData(DataGridView data)
+
+        public void AddData()
         {
             foreach (Product x in products)
             {
@@ -607,9 +564,9 @@ namespace shopProject
                 }
                 dataGridCart.Rows.Add(row.Key, row.Value, row.Value * price);
                 customer.CountTotalAmount();
-
             }
         }
+
         public void UpdateData(DataGridView cart)
         {
             TotalPrice();
@@ -630,17 +587,13 @@ namespace shopProject
                 File.WriteAllText(@"C:\Windows\Temp\shop.txt", x);
             }
         }
-        public void GetImages()
-        {
-            string x = data1.CurrentRow.Cells[0].Value.ToString();
-        }
 
         public void BuyProduct()
         {
-            string x = data1.CurrentRow.Cells[0].Value.ToString();
+            string gameName = data1.CurrentRow.Cells[0].Value.ToString();
             foreach (Product game in products)
             {
-                if (x == game.Name)
+                if (gameName == game.Name)
                 {
                     customer.AddProductToCart(game);
                     UpdateCart();
@@ -649,6 +602,7 @@ namespace shopProject
                 }
             }
         }
+
         public void TotalPrice()
         {
             TotalPriceLabel.Text = $"Total Price: ${customer.TotalPrice * customer.Discount}";

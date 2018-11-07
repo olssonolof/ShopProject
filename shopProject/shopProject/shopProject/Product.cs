@@ -39,6 +39,7 @@ namespace shopProject
             }
         }
     }
+
     public class Customer
     {
         public Dictionary<String, int> Cart = new Dictionary<String, int> { };
@@ -57,7 +58,7 @@ namespace shopProject
             }
         }
 
-
+        // Different path only used for testing 
         public Customer(string path = @"C:\Windows\Temp\shop.txt")
         {
             ReadSaveCart(path);
@@ -73,10 +74,9 @@ namespace shopProject
             {
                 Cart.Add(product.Name, 1);
             }
-            TotalPrice += product.Price;
-
-
+            TotalPrise += product.Price;
         }
+
         public void CountTotalAmount()
         {
             TotalNrOfProduct = Cart.Values.Sum(x => x);
@@ -102,17 +102,19 @@ namespace shopProject
                 File.WriteAllText(@"C:\Windows\Temp\shop.txt", x);
             }
         }
+
         public void RemoveFromCart(DataGridView cartGrid)
         {
             if (cartGrid.RowCount > 0)
             {
-                string x = cartGrid.CurrentRow.Cells[0].Value.ToString();
-                int y = int.Parse(cartGrid.CurrentRow.Cells[2].Value.ToString());
-                Cart.Remove(x);
-                TotalPrice -= y;
+                string nameOfProduct = cartGrid.CurrentRow.Cells[0].Value.ToString();
+                int priceOfProduct = int.Parse(cartGrid.CurrentRow.Cells[2].Value.ToString());
+                Cart.Remove(nameOfProduct);
+                TotalPrise -= priceOfProduct;
                 CountTotalAmount();
             }
         }
+
         public bool ReadDiscount(string text)
         {
             string text2 = text.ToUpper();

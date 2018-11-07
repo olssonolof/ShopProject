@@ -65,6 +65,9 @@
     <Content Include="discount.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="shoppics\background.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="shoppics\Battlefield.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
