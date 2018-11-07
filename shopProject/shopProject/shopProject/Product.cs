@@ -124,8 +124,7 @@ namespace shopProject
                 string[] formated = item.Split(',');
                 if ((text2.Contains(formated[0]) && Discount == 1) || (text2.Contains(formated[0]) && (100 - Double.Parse(formated[1])) < Discount * 100))
                 {
-                    Discount = 1 - (double.Parse(formated[1]) / 100);
-                    MessageBox.Show("You have " + (100 - (Discount * 100)) + "% discount!");
+                    Discount = 1 - (double.Parse(formated[1]) / 100);                 
                     return true;
                 }
                 else if (text2.Contains(formated[0]) && (100 - double.Parse(formated[1])) > Discount * 100)

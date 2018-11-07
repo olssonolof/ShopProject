@@ -304,6 +304,7 @@ namespace shopProject
             if (isDiscount)
             {
                 discountTextBox.BackColor = Color.Green;
+                MessageBox.Show($"You have {(100 - (customer.Discount * 100))}% discount!");
             }
         }
 
