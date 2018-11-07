@@ -35,8 +35,8 @@ namespace shopProject
         List<Product> products;
         public MyForm()
         {
-            Icon = new Icon(@"shoppics\Mario.ico");
             #region UIControls
+            Icon = new Icon(@"shoppics\Mario.ico");
             nonformated = File.ReadAllLines("products.csv");
             customer = new Customer();
             products = new List<Product> { };
