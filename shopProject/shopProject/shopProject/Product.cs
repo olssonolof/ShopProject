@@ -74,7 +74,7 @@ namespace shopProject
             {
                 Cart.Add(product.Name, 1);
             }
-            TotalPrise += product.Price;
+            TotalPrice += product.Price;
         }
 
         public void CountTotalAmount()
@@ -110,7 +110,7 @@ namespace shopProject
                 string nameOfProduct = cartGrid.CurrentRow.Cells[0].Value.ToString();
                 int priceOfProduct = int.Parse(cartGrid.CurrentRow.Cells[2].Value.ToString());
                 Cart.Remove(nameOfProduct);
-                TotalPrise -= priceOfProduct;
+                TotalPrice -= priceOfProduct;
                 CountTotalAmount();
             }
         }
