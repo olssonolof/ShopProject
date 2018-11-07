@@ -26,10 +26,9 @@ namespace shopProject
         private Button checkout;
         private Panel secretPanel;
         private Label productInfo;
-        private PictureBox gradient;
         private Customer customer;
         private TextBox discountTextBox;
-        private  Label TotalPriceLabel;
+        private Label TotalPriceLabel;
         private Form receipt;
 
         string[] nonformated;
@@ -62,19 +61,19 @@ namespace shopProject
             header = new Panel
             {
                 Dock = DockStyle.Fill,
-                BackColor = Color.Gray
+                BackColor = Color.Gray,
+                BackgroundImage = Image.FromFile(@"shoppics\Background.jpg"),
+                BackgroundImageLayout = ImageLayout.Stretch,
             };
-            Panel xz = header;
-            CreateBackgroundImage(xz);
 
             footer = new Panel
             {
                 BackColor = Color.Gray,
                 Dock = DockStyle.Fill,
+                BackgroundImage = Image.FromFile(@"shoppics\Background.jpg"),
+                BackgroundImageLayout = ImageLayout.Stretch,
             };
 
-            Panel xy = footer;
-            CreateBackgroundImage(xy);
             data1 = new DataGridView
             {
                 ColumnCount = 3,
@@ -133,7 +132,6 @@ namespace shopProject
                 RowCount = 3,
                 Dock = DockStyle.Fill,
                 ColumnCount = 3,
-
             };
 
             buy = new Button
@@ -142,7 +140,6 @@ namespace shopProject
                 FlatStyle = FlatStyle.Flat,
                 Text = "Buy >>",
                 AutoSize = true,
-
             };
 
             remove = new Button
@@ -166,15 +163,12 @@ namespace shopProject
             {
                 Size = new Size(10, 10),
                 BackgroundImageLayout = ImageLayout.Zoom,
-
-
             };
 
             checkout = new Button
             {
                 Dock = DockStyle.Fill,
-                Text = "Checkout",
-
+                Text = "Checkout"
             };
 
             productPicture = new PictureBox
@@ -183,7 +177,6 @@ namespace shopProject
                 BackColor = SystemColors.Control,
                 Size = new Size(200, 150),
                 SizeMode = PictureBoxSizeMode.Zoom,
-
             };
 
             productInfo = new Label
@@ -191,7 +184,6 @@ namespace shopProject
                 Text = "test!",
                 Dock = DockStyle.Fill,
                 Font = new Font("arial", 9),
-
             };
 
             Label HeaderInfo = new Label
@@ -199,7 +191,6 @@ namespace shopProject
                 Dock = DockStyle.Bottom,
                 Font = new Font("Arial", 15),
                 Text = "Game information: ",
-
             };
 
             TableLayoutPanel cartPanel = new TableLayoutPanel
@@ -377,9 +368,9 @@ namespace shopProject
             }
         }
 
+        #region reciptMaker
         private void CreateReceipt()
         {
-            #region reciptMaker
 
             receipt = new Form
             {
@@ -467,7 +458,7 @@ namespace shopProject
             receiptContainer.RowStyles.Add(new RowStyle(SizeType.Percent, 15));
             receiptContainer.RowStyles.Add(new RowStyle(SizeType.Percent, 15));
 
-            #endregion
+
 
             receipt.Show();
             this.Enabled = false;
@@ -481,7 +472,6 @@ namespace shopProject
 
             closeReceipt.Click += Receipt_ClosedX;
             receipt.FormClosed += Receipt_Closed;
-
         }
 
         private void Receipt_Closed(object sender, EventArgs e)
@@ -501,17 +491,7 @@ namespace shopProject
         {
             receipt.Close();
         }
-
-        private void CreateBackgroundImage(Panel x)
-        {
-            gradient = new PictureBox
-            {
-                Dock = DockStyle.Fill,
-                ImageLocation = "https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-507917.jpg",
-                SizeMode = PictureBoxSizeMode.StretchImage,
-            };
-            x.Controls.Add(gradient);
-        }
+        #endregion
 
         private void ChangedSelektion(object sender, EventArgs e)
         {
@@ -610,10 +590,10 @@ namespace shopProject
 
         public void BuyProduct()
         {
-            string x = data1.CurrentRow.Cells[0].Value.ToString();
+            string gameName = data1.CurrentRow.Cells[0].Value.ToString();
             foreach (Product game in products)
             {
-                if (x == game.Name)
+                if (gameName == game.Name)
                 {
                     customer.AddProductToCart(game);
                     UpdateCart();
