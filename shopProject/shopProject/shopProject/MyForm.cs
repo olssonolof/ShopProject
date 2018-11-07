@@ -393,7 +393,7 @@ namespace shopProject
             {
                 Dock = DockStyle.Fill,
                 BackColor = SystemColors.Control,
-                RowCount = 4
+                RowCount = 6
             };
 
             Label receiptLabel = new Label
@@ -408,7 +408,7 @@ namespace shopProject
             Label totalPriceLabelReceipt = new Label
             {
                 Dock = DockStyle.Fill,
-                TextAlign = ContentAlignment.BottomCenter,
+                TextAlign = ContentAlignment.MiddleCenter,
                 AutoSize = true,
                 Text = TotalPriceLabel.Text,
             };
@@ -416,9 +416,16 @@ namespace shopProject
             Label discountLabelReceipt = new Label
             {
                 Dock = DockStyle.Fill,
-                TextAlign = ContentAlignment.TopCenter,
+                TextAlign = ContentAlignment.MiddleCenter,
                 AutoSize = true,
                 Text = $"Total discount: ${Math.Round(customer.TotalPrice - (customer.TotalPrice * customer.Discount), 2)}",
+            };
+            Label totalNrOfProducts = new Label
+            {
+                Dock = DockStyle.Fill,
+                TextAlign = ContentAlignment.MiddleCenter,
+                AutoSize = true,
+                Text = $"Total nr of products {customer.TotalNrOfProduct}",
             };
 
             Button closeReceipt = new Button
@@ -462,8 +469,11 @@ namespace shopProject
 
             receiptContainer.RowStyles.Add(new RowStyle(SizeType.Percent, 10));
             receiptContainer.RowStyles.Add(new RowStyle(SizeType.Percent, 60));
-            receiptContainer.RowStyles.Add(new RowStyle(SizeType.Percent, 15));
-            receiptContainer.RowStyles.Add(new RowStyle(SizeType.Percent, 15));
+            receiptContainer.RowStyles.Add(new RowStyle(SizeType.Percent, 5));
+            receiptContainer.RowStyles.Add(new RowStyle(SizeType.Percent, 5));
+            receiptContainer.RowStyles.Add(new RowStyle(SizeType.Percent, 5));
+            receiptContainer.RowStyles.Add(new RowStyle(SizeType.Percent, 10));
+
 
 
 
@@ -472,9 +482,10 @@ namespace shopProject
             receipt.Controls.Add(receiptContainer);
             receiptContainer.Controls.Add(receiptLabel, 0, 0);
             receiptContainer.Controls.Add(dataCart, 0, 1);
-            receiptContainer.Controls.Add(discountLabelReceipt, 0, 2);
-            receiptContainer.Controls.Add(totalPriceLabelReceipt, 0, 2);
-            receiptContainer.Controls.Add(closeReceipt, 0, 3);
+            receiptContainer.Controls.Add(totalNrOfProducts, 0, 2);
+            receiptContainer.Controls.Add(discountLabelReceipt, 0, 3);
+            receiptContainer.Controls.Add(totalPriceLabelReceipt, 0, 4);
+            receiptContainer.Controls.Add(closeReceipt, 0, 5);
 
 
             closeReceipt.Click += Receipt_ClosedX;
