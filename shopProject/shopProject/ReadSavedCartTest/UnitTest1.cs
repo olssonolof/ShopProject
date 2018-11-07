@@ -69,6 +69,17 @@ namespace ReadSavedCartTest
             Assert.AreEqual(customer.ReadDiscount("xxx"), false);
             Assert.AreEqual(customer.Discount, 1);
         }
+        [TestMethod]
+        public void FileTotallyCorrupt()
+        {
+            // Arrange
+            Customer customer = new Customer("test2.txt");
+
+            // Act
+
+            // Assert
+            Assert.AreEqual(customer.Cart.Count, 0);
+        }
 
     }
 }
