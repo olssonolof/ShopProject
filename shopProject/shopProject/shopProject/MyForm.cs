@@ -56,8 +56,7 @@ namespace shopProject
                 ColumnCount = 3,
                 Dock = DockStyle.Fill
             };
-            Controls.Add(container);
-
+            
             header = new Panel
             {
                 Dock = DockStyle.Fill,
@@ -89,10 +88,13 @@ namespace shopProject
                 AllowUserToResizeRows = false,
                 AllowUserToDeleteRows = false,
                 ReadOnly = true,
+                AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
             };
 
+            data1.Columns[0].Name = "Game";
+            data1.Columns[1].Name = "Release year";
+            data1.Columns[2].Name = "Price";
             data1.Columns[0].FillWeight = 180;
-            NameDataGrid();
             data1.SelectionChanged += ChangedSelektion;
 
             infoContainer = new Panel
@@ -100,7 +102,8 @@ namespace shopProject
                 Dock = DockStyle.Fill,
                 BackColor = SystemColors.Control,
             };
-            AddData();
+
+            AddDataToDGVProducts();
 
             dataGridCart = new DataGridView
             {
@@ -117,9 +120,11 @@ namespace shopProject
                 AllowUserToDeleteRows = false,
                 ReadOnly = true,
             };
+
             dataGridCart.Columns[0].FillWeight = 180;
 
             NameDataGridCart(dataGridCart);
+
             infoContainerTable = new TableLayoutPanel
             {
                 ColumnCount = 2,
@@ -216,6 +221,7 @@ namespace shopProject
 
             #endregion  //GUI
 
+            Controls.Add(container);
             container.Controls.Add(header);
             container.Controls.Add(footer, 2, 2);
             container.Controls.Add(data1, 0, 1);
@@ -514,12 +520,9 @@ namespace shopProject
             TotalPrice();
         }
 
-        public void NameDataGrid()
+        public void BuyClicked(object sender, EventArgs e)
         {
-            data1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            data1.Columns[0].Name = "Game";
-            data1.Columns[1].Name = "Release year";
-            data1.Columns[2].Name = "Price";
+            BuyProduct();
         }
 
         // Both Cart and Receipe uses this method
@@ -532,18 +535,14 @@ namespace shopProject
         }
 
 
-        public void AddData()
+        public void AddDataToDGVProducts()
         {
-            foreach (Product x in products)
+            foreach (Product items in products)
             {
-                data1.Rows.Add(x.Name, x.Year, x.Price);
+                data1.Rows.Add(items.Name, items.Year, items.Price);
             }
         }
 
-        public void BuyClicked(object sender, EventArgs e)
-        {
-            BuyProduct();
-        }
 
         public void UpdateCart()
         {
