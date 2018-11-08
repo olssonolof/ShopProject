@@ -37,6 +37,7 @@ namespace shopProject
         public MyForm()
         {
             #region UIControls
+
             Icon = new Icon(@"shoppics\Mario.ico");
             nonformated = File.ReadAllLines("products.csv");
             customer = new Customer();
@@ -220,7 +221,6 @@ namespace shopProject
                 Text = "Total Price: $" + customer.TotalPrice * customer.Discount,
             };
 
-            #endregion  //GUI
 
             Controls.Add(container);
             container.Controls.Add(header);
@@ -272,6 +272,8 @@ namespace shopProject
             container.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 36));
             container.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 32));
 
+            #endregion  //GUI
+            
             remove.MouseEnter += MouseOverButton;
             buy.MouseEnter += MouseOverButton;
             secretPanel.MouseEnter += MouseOverButton;
@@ -283,7 +285,7 @@ namespace shopProject
             dataGridProduct.CellDoubleClick += BuyClicked;
             dataGridCart.DoubleClick += Remove_Clicked;
             clearCart.Click += ClearCartPressed;
-            dataGridProduct.KeyDown += dataGridProduct_KeyUp;
+            dataGridProduct.KeyDown += DataGridProduct_KeyUp;
             checkout.Click += Checkout_Click;
             discountTextBox.TextChanged += DiscountTextBox_TextChanged;
             this.FormClosed += ClosedWindow;
@@ -325,7 +327,7 @@ namespace shopProject
             }
         }
 
-        private void dataGridProduct_KeyUp(object sender, KeyEventArgs e)
+        private void DataGridProduct_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter) BuyProduct();
         }
