@@ -13,10 +13,10 @@ namespace shopProject
     class MyForm : Form
     {
         private TableLayoutPanel container;
-        private DataGridView data1;
         private Panel infoContainer;
         private Panel header;
         private Panel footer;
+        private DataGridView dataGridProduct;
         private DataGridView dataGridCart;
         private TableLayoutPanel infoContainerTable;
         private PictureBox productPicture;
@@ -26,13 +26,14 @@ namespace shopProject
         private Button checkout;
         private Panel secretPanel;
         private Label productInfo;
-        private Customer customer;
         private TextBox discountTextBox;
         private Label TotalPriceLabel;
         private Form receipt;
 
+        private Customer customer;
         string[] nonformated;
         List<Product> products;
+
         public MyForm()
         {
             #region UIControls
@@ -73,7 +74,7 @@ namespace shopProject
                 BackgroundImageLayout = ImageLayout.Stretch,
             };
 
-            data1 = new DataGridView
+            dataGridProduct = new DataGridView
             {
                 ColumnCount = 3,
                 Dock = DockStyle.Fill,
@@ -91,11 +92,11 @@ namespace shopProject
                 AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
             };
 
-            data1.Columns[0].Name = "Game";
-            data1.Columns[1].Name = "Release year";
-            data1.Columns[2].Name = "Price";
-            data1.Columns[0].FillWeight = 180;
-            data1.SelectionChanged += ChangedSelektion;
+            dataGridProduct.Columns[0].Name = "Game";
+            dataGridProduct.Columns[1].Name = "Release year";
+            dataGridProduct.Columns[2].Name = "Price";
+            dataGridProduct.Columns[0].FillWeight = 180;
+            dataGridProduct.SelectionChanged += ChangedSelektion;
 
             infoContainer = new Panel
             {
@@ -224,7 +225,7 @@ namespace shopProject
             Controls.Add(container);
             container.Controls.Add(header);
             container.Controls.Add(footer, 2, 2);
-            container.Controls.Add(data1, 0, 1);
+            container.Controls.Add(dataGridProduct, 0, 1);
             container.Controls.Add(infoContainer, 1, 1);
             container.Controls.Add(cartPanel, 2, 1);
 
@@ -279,10 +280,10 @@ namespace shopProject
             checkout.MouseEnter += MouseOverButton;
             remove.Click += Remove_Clicked;
             buy.Click += BuyClicked;
-            data1.CellDoubleClick += BuyClicked;
+            dataGridProduct.CellDoubleClick += BuyClicked;
             dataGridCart.DoubleClick += Remove_Clicked;
             clearCart.Click += ClearCartPressed;
-            data1.KeyDown += Data1_KeyUp;
+            dataGridProduct.KeyDown += dataGridProduct_KeyUp;
             checkout.Click += Checkout_Click;
             discountTextBox.TextChanged += DiscountTextBox_TextChanged;
             this.FormClosed += ClosedWindow;
@@ -324,7 +325,7 @@ namespace shopProject
             }
         }
 
-        private void Data1_KeyUp(object sender, KeyEventArgs e)
+        private void dataGridProduct_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter) BuyProduct();
         }
@@ -513,7 +514,7 @@ namespace shopProject
 
         private void ChangedSelektion(object sender, EventArgs e)
         {
-            string x = data1.CurrentRow.Cells[0].Value.ToString();
+            string x = dataGridProduct.CurrentRow.Cells[0].Value.ToString();
             foreach (Product item in products)
             {
                 if (item.Name == x)
@@ -551,7 +552,7 @@ namespace shopProject
         {
             foreach (Product items in products)
             {
-                data1.Rows.Add(items.Name, items.Year, items.Price);
+                dataGridProduct.Rows.Add(items.Name, items.Year, items.Price);
             }
         }
 
@@ -601,7 +602,7 @@ namespace shopProject
 
         public void BuyProduct()
         {
-            string gameName = data1.CurrentRow.Cells[0].Value.ToString();
+            string gameName = dataGridProduct.CurrentRow.Cells[0].Value.ToString();
             foreach (Product game in products)
             {
                 if (gameName == game.Name)
