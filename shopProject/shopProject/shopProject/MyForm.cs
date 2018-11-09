@@ -27,7 +27,7 @@ namespace shopProject
         private Panel secretPanel;
         private Label productInfo;
         private TextBox discountTextBox;
-        private Label TotalPriceLabel;
+        private Label totalPriceLabel;
         private Form receipt;
 
         private Customer customer;
@@ -215,7 +215,7 @@ namespace shopProject
             };
 
             discountTextBox.Click += DiscountTextSelectAll_OnClick;
-            TotalPriceLabel = new Label
+            totalPriceLabel = new Label
             {
                 AutoSize = true,
                 Text = "Total Price: $" + customer.TotalPrice * customer.Discount,
@@ -231,7 +231,7 @@ namespace shopProject
 
             cartPanel.Controls.Add(dataGridCart, 0, 0);
             cartPanel.Controls.Add(discountTextBox, 0, 1);
-            cartPanel.Controls.Add(TotalPriceLabel, 1, 1);
+            cartPanel.Controls.Add(totalPriceLabel, 1, 1);
             cartPanel.Controls.Add(checkout, 0, 2);
             cartPanel.SetColumnSpan(dataGridCart, 100);
             cartPanel.SetColumnSpan(checkout, 100);
@@ -413,7 +413,7 @@ namespace shopProject
                 Dock = DockStyle.Fill,
                 TextAlign = ContentAlignment.MiddleCenter,
                 AutoSize = true,
-                Text = TotalPriceLabel.Text,
+                Text = totalPriceLabel.Text,
             };
 
             Label discountLabelReceipt = new Label
@@ -619,7 +619,7 @@ namespace shopProject
 
         public void TotalPrice()
         {
-            TotalPriceLabel.Text = $"Total Price: ${customer.TotalPrice * customer.Discount}";
+            totalPriceLabel.Text = $"Total Price: ${customer.TotalPrice * customer.Discount}";
         }
 
     }
